@@ -9,7 +9,7 @@ services:
       - 1433:1433
     environment:
       ACCEPT_EULA: Y
-      SA_PASSWORD: "${SQLSERVER_PASSWORD}"
+      SA_PASSWORD: ${SQLSERVER_PASSWORD}
       MSSQL_PID: Express
     volumes:
       - ~/docker/sqlserver-data:/var/opt/mssql

@@ -50,10 +50,10 @@ namespace CreaNovelNETCore.Repositories
             return _mapper.Map<LecturaDto>(dbLectura);
         }
 
-        public async Task<List<LecturaDto>> GetLecturasFromUsuario(Guid usuarioId)
-        {
-            var dbUsuario = await _context.Usuarios.Include(u => u.Lecturas).FirstOrDefaultAsync(u => u.UsuarioId == usuarioId);
-            return _mapper.Map<List<LecturaDto>>(dbUsuario.Lecturas);
-        }
+        // public async Task<List<LecturaDto>> GetLecturasFromUsuario(Guid usuarioId)
+        // {
+        //     var dbUsuario = await _context.Usuarios.Include(u => u.Lecturas).FirstOrDefaultAsync(u => u.UsuarioId == usuarioId);
+        //     return _mapper.Map<List<LecturaDto>>(dbUsuario.Lecturas);
+        // }
     }
 }

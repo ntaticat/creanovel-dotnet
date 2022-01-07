@@ -6,10 +6,10 @@ namespace CreaNovelNETCore.DTOs.Usuario
 {
     public class UsuarioDto
     {
-        public Guid UsuarioId { get; set; }
+        public Guid Id { get; set; }
         public string Nombre { get; set; }
-        public string Correo { get; set; }
-        public string Nickname { get; set; }
+        public string Email { get; set; }
+        public string UserName { get; set; }
         public ICollection<LecturaDto> Lecturas { get; set; }
         public ICollection<NovelaNoEscenasDTO> NovelasCreadas { get; set; }
     }

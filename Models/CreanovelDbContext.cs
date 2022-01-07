@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CreaNovelNETCore.Models
 {
 
-    public class CreanovelDbContext: DbContext
+    public class CreanovelDbContext: IdentityDbContext
     {
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Lectura> Lecturas { get; set; }
@@ -21,14 +22,16 @@ namespace CreaNovelNETCore.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+            
             modelBuilder.Entity<Recurso>().ToTable("Recursos");
             modelBuilder.Entity<RecursoConversacion>().ToTable("RecursosConversacion");
             modelBuilder.Entity<RecursoDecision>().ToTable("RecursosDecision");
-            
-            /*modelBuilder.Entity<Recurso>()
-                .HasDiscriminator<string>("tipo_recurso")
-                .HasValue<RecursoConversacion>("recurso_conversacion")
-                .HasValue<RecursoDecision>("recurso_decision");*/
+
+            modelBuilder.Entity<Usuario>()
+                .HasMany(e => e.NovelasCreadas)
+                .WithOne(e => e.UsuarioCreador)
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             modelBuilder.Entity<Lectura>()
                 .HasOne(e => e.UsuarioPropietario)

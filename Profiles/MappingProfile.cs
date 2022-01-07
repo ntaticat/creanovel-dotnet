@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using CreaNovelNETCore.DTOs;
+using CreaNovelNETCore.DTOs.Auth;
 using CreaNovelNETCore.DTOs.Escena;
 using CreaNovelNETCore.DTOs.Lectura;
 using CreaNovelNETCore.DTOs.LecturaRecursos;
@@ -16,7 +18,13 @@ namespace CreaNovelNETCore.Profiles
         public MappingProfile()
         {
             // Novela
-            CreateMap<CreateNovelaDTO, Novela>();
+            CreateMap<CreateNovelaDTO, Novela>()
+                .ForMember(
+                    n => n.UsuarioCreadorId, 
+                    ucid => ucid.MapFrom(
+                        data => Guid.Parse(data.UsuarioCreadorId)
+                    )
+                );
             CreateMap<Novela, NovelaNoEscenasDTO>();
             CreateMap<Novela, NovelaWithEscenasDTO>();
             
@@ -52,6 +60,10 @@ namespace CreaNovelNETCore.Profiles
             // Lectura Recursos
             CreateMap<LecturaRecursosDto, LecturaRecursos>();
             CreateMap<LecturaRecursos, LecturaRecursosDto>();
+
+            // Auth
+            CreateMap<UserCredentials, Usuario>();
+            CreateMap<Usuario, UserCredentials>();
         }
     }
 }

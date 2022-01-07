@@ -7,6 +7,6 @@ namespace CreaNovelNETCore.DTOs
         public string Titulo { get; set; }
         public string Descripcion { get; set; }
         public bool Disponible { get; set; }
-        public Guid? UsuarioCreadorId { get; set; }
+        public string? UsuarioCreadorId { get; set; }
     }
 }
