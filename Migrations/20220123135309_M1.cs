@@ -11,7 +11,7 @@ namespace CreaNovelNETCore.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -25,8 +25,7 @@ namespace CreaNovelNETCore.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -54,7 +53,7 @@ namespace CreaNovelNETCore.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -75,7 +74,7 @@ namespace CreaNovelNETCore.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -97,7 +96,7 @@ namespace CreaNovelNETCore.Migrations
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -114,8 +113,8 @@ namespace CreaNovelNETCore.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -138,7 +137,7 @@ namespace CreaNovelNETCore.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -162,15 +161,14 @@ namespace CreaNovelNETCore.Migrations
                     Titulo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Disponible = table.Column<bool>(type: "bit", nullable: false),
-                    UsuarioCreadorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UsuarioCreadorId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    UsuarioCreadorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Novelas", x => x.NovelaId);
                     table.ForeignKey(
-                        name: "FK_Novelas_AspNetUsers_UsuarioCreadorId1",
-                        column: x => x.UsuarioCreadorId1,
+                        name: "FK_Novelas_AspNetUsers_UsuarioCreadorId",
+                        column: x => x.UsuarioCreadorId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -201,15 +199,14 @@ namespace CreaNovelNETCore.Migrations
                 {
                     LecturaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     NovelaRegistrosId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioPropietarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioPropietarioId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    UsuarioPropietarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Lecturas", x => x.LecturaId);
                     table.ForeignKey(
-                        name: "FK_Lecturas_AspNetUsers_UsuarioPropietarioId1",
-                        column: x => x.UsuarioPropietarioId1,
+                        name: "FK_Lecturas_AspNetUsers_UsuarioPropietarioId",
+                        column: x => x.UsuarioPropietarioId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -389,14 +386,14 @@ namespace CreaNovelNETCore.Migrations
                 column: "NovelaRegistrosId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Lecturas_UsuarioPropietarioId1",
+                name: "IX_Lecturas_UsuarioPropietarioId",
                 table: "Lecturas",
-                column: "UsuarioPropietarioId1");
+                column: "UsuarioPropietarioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Novelas_UsuarioCreadorId1",
+                name: "IX_Novelas_UsuarioCreadorId",
                 table: "Novelas",
-                column: "UsuarioCreadorId1");
+                column: "UsuarioCreadorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RecursoDecisionOpciones_RecursoDecisionId",

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CreaNovelNETCore.DTOs;
 using CreaNovelNETCore.DTOs.Escena;
+using CreaNovelNETCore.DTOs.Novela;
 using CreaNovelNETCore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -46,11 +47,7 @@ namespace CreaNovelNETCore.Repositories
 
         public async Task<NovelaNoEscenasDTO> Create(CreateNovelaDTO novelaDto)
         {
-            Guid.Parse(novelaDto.UsuarioCreadorId);
             var novela = _mapper.Map<Novela>(novelaDto);
-
-            var usuarioCreador = await _context.Usuarios.FindAsync(novela.UsuarioCreadorId);
-
             await this._context.Novelas.AddAsync(novela);
             await _context.SaveChangesAsync();
             var dbNovelaDto = _mapper.Map<NovelaNoEscenasDTO>(novela);

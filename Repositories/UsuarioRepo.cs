@@ -33,7 +33,7 @@ namespace CreaNovelNETCore.Repositories
             _signInManager = signInManager;
     }
         
-        public async Task<UsuarioDto> GetById(string usuarioId)
+        public async Task<UsuarioDto> GetById(Guid usuarioId)
         {
             var dbUsuario = await _context.Usuarios
                 .Include(u => u.Lecturas)
@@ -70,7 +70,7 @@ namespace CreaNovelNETCore.Repositories
         {
             var claims = new List<Claim>()
             {
-                new Claim("userId", usuario.Id)
+                new Claim("userId", usuario.Id.ToString())
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWTKey"]));

@@ -1,12 +1,12 @@
 using System;
 
-namespace CreaNovelNETCore.DTOs
+namespace CreaNovelNETCore.DTOs.Novela
 {
     public class CreateNovelaDTO
     {
         public string Titulo { get; set; }
         public string Descripcion { get; set; }
         public bool Disponible { get; set; }
-        public string? UsuarioCreadorId { get; set; }
+        public Guid? UsuarioCreadorId { get; set; }
     }
 }

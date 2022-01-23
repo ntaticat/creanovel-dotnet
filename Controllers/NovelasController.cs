@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using CreaNovelNETCore.DTOs;
+using CreaNovelNETCore.DTOs.Novela;
 using CreaNovelNETCore.Models;
 using CreaNovelNETCore.Repositories;
 using Microsoft.AspNetCore.Mvc;

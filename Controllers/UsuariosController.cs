@@ -23,7 +23,7 @@ namespace CreaNovelNETCore.Controllers
         
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("{id}")]
-        public async Task<ActionResult<UsuarioDto>> GetUsuario(string id)
+        public async Task<ActionResult<UsuarioDto>> GetUsuario(Guid id)
         {
             var usuario = await _repo.GetById(id);
             return usuario;

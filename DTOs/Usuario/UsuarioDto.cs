@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using CreaNovelNETCore.DTOs.Lectura;
+using CreaNovelNETCore.DTOs.Novela;
 
 namespace CreaNovelNETCore.DTOs.Usuario
 {

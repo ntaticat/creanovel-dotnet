@@ -1,10 +1,12 @@
+using System;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CreaNovelNETCore.Models
 {
 
-    public class CreanovelDbContext: IdentityDbContext
+    public class CreanovelDbContext: IdentityDbContext<Usuario, IdentityRole<Guid>, Guid>
     {
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Lectura> Lecturas { get; set; }
