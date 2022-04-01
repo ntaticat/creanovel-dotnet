@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using WebAPI.DTOs.Escena;
 using WebAPI.Models;
-using WebAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

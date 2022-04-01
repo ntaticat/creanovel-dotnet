@@ -4,7 +4,6 @@ using AutoMapper;
 using WebAPI.DTOs.Lectura;
 using WebAPI.DTOs.LecturaRecursos;
 using WebAPI.Models;
-using WebAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

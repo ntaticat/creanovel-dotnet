@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using WebAPI.DTOs;
 using WebAPI.Models;
-using WebAPI.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,13 +36,6 @@ namespace WebAPI
     {
       services.AddControllers();
       AddSwagger(services);
-
-      services.AddTransient<NovelaRepo>();
-      services.AddTransient<EscenaRepo>();
-      services.AddTransient<RecursoRepo>();
-
-      services.AddTransient<LecturaRepo>();
-      services.AddTransient<UsuarioRepo>();
 
       services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
           .AddJwtBearer(opt => opt.TokenValidationParameters = new TokenValidationParameters

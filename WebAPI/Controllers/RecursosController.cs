@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using WebAPI.DTOs.Recursos;
 using WebAPI.Models;
-using WebAPI.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -8,7 +8,6 @@ using AutoMapper;
 using WebAPI.DTOs.Auth;
 using WebAPI.DTOs.Usuario;
 using WebAPI.Models;
-using WebAPI.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
