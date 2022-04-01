@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using WebAPI.DTOs.Recursos;
-using WebAPI.Models;
+using Application.Entities.Recurso.Dtos;
+using Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Domain;
 
 namespace WebAPI.Controllers
 {
@@ -27,34 +28,34 @@ namespace WebAPI.Controllers
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<RecursoDTO>>> GetRecursos()
+    public async Task<ActionResult<List<RecursoDto>>> GetRecursos()
     {
       var dbRecursos = await _context.Recursos.ToListAsync();
-      var dbRecursosDto = _mapper.Map<List<RecursoDTO>>(dbRecursos);
+      var dbRecursosDto = _mapper.Map<List<RecursoDto>>(dbRecursos);
       return dbRecursosDto;
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<RecursoDTO>> GetRecurso(Guid id)
+    public async Task<ActionResult<RecursoDto>> GetRecurso(Guid id)
     {
       var dbRecurso = await _context.Recursos.FindAsync(id);
 
       var type = dbRecurso.GetType() == typeof(RecursoConversacion);
       if (type)
       {
-        return _mapper.Map<RecursoConversacionDTO>(dbRecurso);
+        return _mapper.Map<RecursoConversacionDto>(dbRecurso);
       }
       else
       {
-        return _mapper.Map<RecursoDecisionDTO>(dbRecurso);
+        return _mapper.Map<RecursoDecisionDto>(dbRecurso);
       }
     }
 
     [HttpPost]
-    public async Task<ActionResult<RecursoDTO>> PostRecurso([FromBody] CreateRecursoDTO createRecursoDto)
+    public async Task<ActionResult<RecursoDto>> PostRecurso([FromBody] CreateRecursoDto createRecursoDto)
     {
       Recurso recurso;
-      RecursoDTO recursoDto;
+      RecursoDto recursoDto;
       switch (createRecursoDto.TipoRecurso)
       {
         case "recurso_conversacion":
@@ -74,13 +75,13 @@ namespace WebAPI.Controllers
       switch (createRecursoDto.TipoRecurso)
       {
         case "recurso_conversacion":
-          recursoDto = _mapper.Map<RecursoConversacionDTO>(recurso);
+          recursoDto = _mapper.Map<RecursoConversacionDto>(recurso);
           break;
         case "recurso_decision":
-          recursoDto = _mapper.Map<RecursoDecisionDTO>(recurso);
+          recursoDto = _mapper.Map<RecursoDecisionDto>(recurso);
           break;
         default:
-          recursoDto = _mapper.Map<RecursoConversacionDTO>(recurso);
+          recursoDto = _mapper.Map<RecursoConversacionDto>(recurso);
           break;
       }
 
@@ -88,7 +89,7 @@ namespace WebAPI.Controllers
     }
 
     [HttpPost("{recursoId}/next/{recursoSiguienteId}")]
-    public async Task<ActionResult<RecursoDTO>> PostSetRecursoSiguiente(Guid recursoId, Guid recursoSiguienteId)
+    public async Task<ActionResult<RecursoDto>> PostSetRecursoSiguiente(Guid recursoId, Guid recursoSiguienteId)
     {
       var dbRecurso = await _context.Recursos.OfType<RecursoConversacion>().FirstOrDefaultAsync(r => r.RecursoId == recursoId);
       var siguienteRecurso = await _context.Recursos.FindAsync(recursoSiguienteId);
@@ -96,11 +97,11 @@ namespace WebAPI.Controllers
       dbRecurso.SiguienteRecursoId = recursoSiguienteId;
 
       await _context.SaveChangesAsync();
-      return _mapper.Map<RecursoDTO>(dbRecurso);
+      return _mapper.Map<RecursoDto>(dbRecurso);
     }
 
     [HttpPost("opciones")]
-    public async Task<ActionResult<RecursoDecisionOpcionDTO>> PostOpcion([FromBody] CreateRecursoDecisionOpcionDTO opcionDto)
+    public async Task<ActionResult<RecursoDecisionOpcionDto>> PostOpcion([FromBody] CreateRecursoDecisionOpcionDto opcionDto)
     {
       var opcion = _mapper.Map<RecursoDecisionOpcion>(opcionDto);
       _context.RecursoDecisionOpciones.Add(opcion);
@@ -110,16 +111,16 @@ namespace WebAPI.Controllers
       dbRecursoDecision.Opciones.Add(opcion);
       await _context.SaveChangesAsync();
 
-      return _mapper.Map<RecursoDecisionOpcionDTO>(opcion);
+      return _mapper.Map<RecursoDecisionOpcionDto>(opcion);
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<RecursoDTO>> DeleteRecurso(Guid id)
+    public async Task<ActionResult<RecursoDto>> DeleteRecurso(Guid id)
     {
       var dbRecurso = await _context.Recursos.FindAsync(id);
       _context.Recursos.Remove(dbRecurso);
       await _context.SaveChangesAsync();
-      return _mapper.Map<RecursoDTO>(dbRecurso);
+      return _mapper.Map<RecursoDto>(dbRecurso);
     }
 
     // FIXME Dapper

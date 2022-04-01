@@ -1,11 +1,12 @@
 using System;
 using System.Threading.Tasks;
 using AutoMapper;
-using WebAPI.DTOs.Lectura;
-using WebAPI.DTOs.LecturaRecursos;
-using WebAPI.Models;
+using Application.Entities.Lectura.Dtos;
+using Application.Entities.LecturaRecurso.Dtos;
+using Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Domain;
 
 namespace WebAPI.Controllers
 {
@@ -32,7 +33,7 @@ namespace WebAPI.Controllers
     }
 
     [HttpPost("recursos")]
-    public async Task<ActionResult<LecturaDto>> PostLecturaRecurso([FromBody] LecturaRecursosDto lecturaRecursosDto)
+    public async Task<ActionResult<LecturaDto>> PostLecturaRecurso([FromBody] LecturaRecursoDto lecturaRecursosDto)
     {
       var lecturaRecursos = _mapper.Map<LecturaRecursos>(lecturaRecursosDto);
       lecturaRecursos.Lectura = await _context.Lecturas.FindAsync(lecturaRecursos.LecturaId);

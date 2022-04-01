@@ -5,9 +5,9 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using WebAPI.DTOs.Auth;
-using WebAPI.DTOs.Usuario;
-using WebAPI.Models;
+using Application.Entities.Auth.Dtos;
+using Application.Entities.Usuario.Dtos;
+using Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Domain;
 
 namespace WebAPI.Controllers
 {

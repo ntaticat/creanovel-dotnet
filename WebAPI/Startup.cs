@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using WebAPI.DTOs;
-using WebAPI.Models;
+using Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -19,6 +18,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Domain;
+using MediatR;
 
 namespace WebAPI
 {
@@ -74,6 +75,8 @@ namespace WebAPI
           options => options.SerializerSettings.ReferenceLoopHandling =
               Newtonsoft.Json.ReferenceLoopHandling.Ignore
       );
+
+      services.AddMediatR(typeof(Application.Entities.Novela.Consulta.Handler).Assembly);
     }
 
     private void AddSwagger(IServiceCollection services)
