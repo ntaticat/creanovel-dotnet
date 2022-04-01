@@ -4,7 +4,7 @@ using AutoMapper;
 using Application.Entities.Escena.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Domain;
+using Domain.Models;
 using Persistence;
 
 namespace WebAPI.Controllers

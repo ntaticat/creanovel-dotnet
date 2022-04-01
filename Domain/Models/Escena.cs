@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 // using System.ComponentModel.DataAnnotations;
 
-namespace Domain
+namespace Domain.Models
 {
     public class Escena
     {

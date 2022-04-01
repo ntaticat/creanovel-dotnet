@@ -9,7 +9,7 @@ using Application.Entities.LecturaRecurso.Dtos;
 using Application.Entities.Novela.Dtos;
 using Application.Entities.Recurso.Dtos;
 using Application.Entities.Usuario.Dtos;
-using Domain;
+using Domain.Models;
 
 namespace Application.Profiles
 {

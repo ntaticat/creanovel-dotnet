@@ -6,7 +6,7 @@ using Application.Entities.LecturaRecurso.Dtos;
 using Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Domain;
+using Domain.Models;
 
 namespace WebAPI.Controllers
 {

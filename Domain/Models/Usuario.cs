@@ -4,7 +4,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
-namespace Domain
+namespace Domain.Models
 {
     public class Usuario : IdentityUser<Guid>
     {
