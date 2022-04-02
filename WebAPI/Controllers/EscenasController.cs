@@ -3,9 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Application.Entities.Escena.Dtos;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Domain.Models;
-using Persistence;
+using MediatR;
 
 namespace WebAPI.Controllers
 {
@@ -13,42 +11,36 @@ namespace WebAPI.Controllers
   [Route("api/[controller]")]
   public class EscenasController : ControllerBase
   {
-    private readonly IMapper _mapper;
-    private readonly CreanovelDbContext _context;
+    private readonly IMediator _mediator;
 
-    public EscenasController(IMapper mapper, CreanovelDbContext context)
+    public EscenasController(IMediator mediator)
     {
-      _mapper = mapper;
-      _context = context;
+      _mediator = mediator;
     }
 
-    // FIXME Dapper
     [HttpGet("{id}")]
     public async Task<ActionResult<EscenaRecursosDto>> GetEscenaRecursos(Guid id)
     {
-      var escena = await _context.Escenas.Include(t => t.Recursos).FirstOrDefaultAsync(e => e.EscenaId == id);
-      var escenaDto = _mapper.Map<EscenaRecursosDto>(escena);
-      return escenaDto;
+      return await _mediator.Send(new Application.Entities.Escena.ConsultaId.EscenaUnica{ EscenaId = id });
     }
 
     [HttpPost]
-    public async Task<ActionResult<EscenaDto>> PostEscena([FromBody] CreateEscenaDto escenaDto)
+    public async Task<ActionResult<Unit>> PostEscena([FromBody] Application.Entities.Escena.Crear.Execute data)
     {
-      var escena = _mapper.Map<Escena>(escenaDto);
-      await _context.Escenas.AddAsync(escena);
-      await _context.SaveChangesAsync();
-      var dbEscenaDto = _mapper.Map<EscenaDto>(escena);
+      return await _mediator.Send(data);
+    }
 
-      return dbEscenaDto;
+    [HttpPatch("{id}")]
+    public async Task<ActionResult<Unit>> PatchEscena(Guid id, [FromBody] Application.Entities.Escena.Editar.Execute data)
+    {
+      data.EscenaId = id;
+      return await _mediator.Send(data);
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<EscenaDto>> DeleteEscena(Guid id)
+    public async Task<ActionResult<Unit>> DeleteEscena(Guid id)
     {
-      var dbEscena = await _context.Escenas.FindAsync(id);
-      _context.Escenas.Remove(dbEscena);
-      await _context.SaveChangesAsync();
-      return _mapper.Map<EscenaDto>(dbEscena);
+      return await _mediator.Send(new Application.Entities.Escena.Eliminar.Execute{ EscenaId = id });
     }
   }
 }
