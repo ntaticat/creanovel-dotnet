@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using AutoMapper;
 using Application.Entities.Escena.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
