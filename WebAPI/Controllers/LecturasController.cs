@@ -1,12 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using AutoMapper;
-using Application.Entities.Lectura.Dtos;
-using Application.Entities.LecturaRecurso.Dtos;
-using Persistence;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Domain.Models;
+using MediatR;
 
 namespace WebAPI.Controllers
 {
@@ -14,45 +9,35 @@ namespace WebAPI.Controllers
   [Route("api/[controller]")]
   public class LecturasController : ControllerBase
   {
-    private readonly IMapper _mapper;
-    private readonly CreanovelDbContext _context;
+    private readonly IMediator _mediator;
 
-    public LecturasController(IMapper mapper, CreanovelDbContext context)
+    public LecturasController(IMediator mediator)
     {
-      _mapper = mapper;
-      _context = context;
+      _mediator = mediator;
     }
 
     [HttpPost]
-    public async Task<ActionResult<LecturaDto>> PostLectura([FromBody] CreateLecturaDto lecturaDto)
+    public async Task<ActionResult<Unit>> PostLectura([FromBody] Application.Entities.Lectura.Crear.Execute data)
     {
-      var lectura = _mapper.Map<Lectura>(lecturaDto);
-      await _context.Lecturas.AddAsync(lectura);
-      await _context.SaveChangesAsync();
-      return _mapper.Map<LecturaDto>(lectura);
+      return await _mediator.Send(data);
     }
 
     [HttpPost("recursos")]
-    public async Task<ActionResult<LecturaDto>> PostLecturaRecurso([FromBody] LecturaRecursoDto lecturaRecursosDto)
+    public async Task<ActionResult<Unit>> PostLecturaRecurso([FromBody] Application.Entities.Lectura.RegistrarRecurso.Execute data)
     {
-      var lecturaRecursos = _mapper.Map<LecturaRecursos>(lecturaRecursosDto);
-      lecturaRecursos.Lectura = await _context.Lecturas.FindAsync(lecturaRecursos.LecturaId);
-      lecturaRecursos.Recurso = await _context.Recursos.FindAsync(lecturaRecursos.RecursoId);
-      await _context.LecturaRecurso.AddAsync(lecturaRecursos);
-      await _context.SaveChangesAsync();
-
-      var dbLectura = await _context.Lecturas.Include(l => l.Recursos).FirstOrDefaultAsync(l => l.LecturaId == lecturaRecursos.LecturaId);
-
-      return _mapper.Map<LecturaDto>(dbLectura);
+      return await _mediator.Send(data);
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<LecturaDto>> DeleteLectura(Guid id)
+    public async Task<ActionResult<Unit>> DeleteLectura(Guid id)
     {
-      var dbLectura = await _context.Lecturas.FindAsync(id);
-      _context.Lecturas.Remove(dbLectura);
-      await _context.SaveChangesAsync();
-      return _mapper.Map<LecturaDto>(dbLectura);
+      return await _mediator.Send(new Application.Entities.Lectura.Eliminar.Execute{ LecturaId = id });
+    }
+
+    [HttpDelete("recursos")]
+    public async Task<ActionResult<Unit>> DeleteLecturaRecurso(Application.Entities.Lectura.EliminarRecurso.Execute data)
+    {
+      return await _mediator.Send(data);
     }
   }
 }
