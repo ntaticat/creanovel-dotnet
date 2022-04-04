@@ -16,6 +16,7 @@ namespace Application.Entities.Lectura
         {
             public Guid LecturaId { get; set; }
             public Guid RecursoId { get; set; }
+            public int RecursoOrder { get; set; }
         }
 
         public class Handler : IRequestHandler<Execute>
@@ -33,7 +34,8 @@ namespace Application.Entities.Lectura
             {
                 var lecturaRecurso = new Domain.Models.LecturaRecursos {
                     LecturaId = request.LecturaId,
-                    RecursoId = request.RecursoId
+                    RecursoId = request.RecursoId,
+                    RecursoOrder = request.RecursoOrder
                 };
                 
                 // lecturaRecursos.Lectura = await _context.Lecturas.FindAsync(lecturaRecursos.LecturaId);

@@ -6,5 +6,6 @@ namespace Application.Entities.LecturaRecurso.Dtos
     {
         public Guid LecturaId { get; set; }
         public Guid RecursoId { get; set; }
+        public int RecursoOrder { get; set; }
     }
 }
