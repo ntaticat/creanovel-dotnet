@@ -31,7 +31,13 @@ namespace Application.Entities.Novela
 
             public async Task<NovelaWithEscenasDto> Handle(NovelaUnica request, CancellationToken cancellationToken)
             {
-                var novela = await _context.Novelas.Include(novela => novela.Escenas).FirstOrDefaultAsync(novela => novela.NovelaId == request.NovelaId);
+                var novela = await _context.Novelas
+                    .Include(n => n.Escenas)
+                    .AsSplitQuery()
+                    .Include(n => n.Personajes)
+                    .ThenInclude(n => n.Personaje)
+                    .AsSplitQuery()
+                    .FirstOrDefaultAsync(novela => novela.NovelaId == request.NovelaId);
 
                 if (novela == null)
                 {

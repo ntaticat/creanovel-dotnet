@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Application.Entities.Background.Dtos;
 using Application.Entities.Escena.Dtos;
+using Application.Entities.Personaje.Dtos;
 
 namespace Application.Entities.Novela.Dtos
 {
@@ -12,5 +14,7 @@ namespace Application.Entities.Novela.Dtos
         public bool Disponible { get; set; }
         public Guid? UsuarioCreadorId { get; set; }
         public ICollection<EscenaDto> Escenas { get; set; }
+        public ICollection<PersonajeDto> Personajes { get; set; }
+        public ICollection<BackgroundDto> Backgrounds { get; set; }
     }
 }

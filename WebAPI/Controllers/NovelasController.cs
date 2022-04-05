@@ -46,6 +46,12 @@ namespace WebAPI.Controllers
       return await _mediator.Send(data);
     }
 
+    [HttpPost("personajes")]
+    public async Task<ActionResult<Unit>> PostNovelaPersonaje([FromBody] Application.Entities.Novela.RegistrarPersonaje.Execute data)
+    {
+      return await _mediator.Send(data);
+    }
+
     [HttpPatch("{id}")]
     public async Task<ActionResult<Unit>> PatchNovela(Guid id, [FromBody] Application.Entities.Novela.Editar.Execute data)
     {

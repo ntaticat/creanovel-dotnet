@@ -10,6 +10,12 @@ using Application.Entities.Novela.Dtos;
 using Application.Entities.Recurso.Dtos;
 using Application.Entities.Usuario.Dtos;
 using Domain.Models;
+using Application.Entities.NovelaPersonaje.Dtos;
+using Application.Entities.Personaje.Dtos;
+using Application.Entities.PersonajeSprite.Dtos;
+using Application.Entities.Background.Dtos;
+using Application.Entities.BackgroundSprite.Dtos;
+using Application.Entities.NovelaBackground.Dtos;
 
 namespace Application.Profiles
 {
@@ -18,13 +24,33 @@ namespace Application.Profiles
         public MappingProfile()
         {
             // Novela
-            CreateMap<CreateNovelaDto, Novela>();
             CreateMap<Novela, NovelaNoEscenasDto>();
-            CreateMap<Novela, NovelaWithEscenasDto>();
+            CreateMap<Novela, NovelaWithEscenasDto>()
+            .ForMember(x => x.Personajes, y => y.MapFrom(z => z.Personajes.Select(p => p.Personaje).ToList()))
+            .ForMember(x => x.Backgrounds, y => y.MapFrom(z => z.Backgrounds.Select(p => p.Background).ToList()));
+
+            
+
+            // Personaje
+            CreateMap<Personaje, PersonajeDto>();
+
+            // PersonajeSprite
+            CreateMap<PersonajeSprite, PersonajeSpriteDto>();
+
+            // Novela-Personaje
+            CreateMap<NovelaPersonaje, NovelaPersonajeDto>();
+
+            // Background
+            CreateMap<Background, BackgroundDto>();
+
+            // BackgroundSprite
+            CreateMap<BackgroundSprite, BackgroundSpriteDto>();
+
+            // Novela-Background
+            CreateMap<NovelaBackground, NovelaBackgroundDto>();
             
             // Escena
             CreateMap<Escena, EscenaDto>();
-            CreateMap<CreateEscenaDto, Escena>();
             CreateMap<EscenaDto, Escena>();
 
             CreateMap<Escena, EscenaRecursosDto>();
@@ -41,8 +67,7 @@ namespace Application.Profiles
             CreateMap<CreateRecursoDto, RecursoDecision>();
             CreateMap<CreateRecursoDto, RecursoConversacion>();
             
-            // Lecutra
-            CreateMap<CreateLecturaDto, Lectura>();
+            // Lectura
             CreateMap<LecturaDto, Lectura>();
             CreateMap<Lectura, LecturaDto>();
             
