@@ -72,7 +72,6 @@ namespace Application.Profiles
             CreateMap<Lectura, LecturaDto>();
             
             // Usuario
-            CreateMap<CreateUsuarioDto, Usuario>();
             CreateMap<Usuario, UsuarioDto>();
             CreateMap<UsuarioDto, Usuario>();
             
