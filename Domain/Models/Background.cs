@@ -9,6 +9,7 @@ namespace Domain.Models
     {
         public Guid BackgroundId { get; set; }
         public string Descripcion { get; set; }
+        public ICollection<BackgroundSprite> Sprites { get; set; }
         public ICollection<NovelaBackground> Novelas { get; set; }
     }
 }
