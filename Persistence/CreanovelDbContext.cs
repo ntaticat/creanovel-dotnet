@@ -18,6 +18,13 @@ namespace Persistence
         public DbSet<RecursoConversacion> RecursosConversacion { get; set; }
         public DbSet<RecursoDecision> RecursosDecision { get; set; }
         public DbSet<RecursoDecisionOpcion> RecursoDecisionOpciones { get; set; }
+        public DbSet<Personaje> Personajes { get; set; }
+        public DbSet<Background> Backgrounds { get; set; }
+        public DbSet<PersonajeSprite> PersonajeSprites { get; set; }
+        public DbSet<BackgroundSprite> BackgroundSprites { get; set; }
+        public DbSet<NovelaPersonaje> NovelaPersonaje { get; set; }
+        public DbSet<NovelaBackground> NovelaBackground { get; set; }
+
 
         public CreanovelDbContext(DbContextOptions<CreanovelDbContext> options): base(options)
         {
@@ -48,6 +55,11 @@ namespace Persistence
                 .HasMany(e => e.Lecturas)
                 .WithOne(e => e.Recurso)
                 .OnDelete(DeleteBehavior.ClientCascade);
+
+            modelBuilder.Entity<NovelaPersonaje>()
+                .HasKey(np => new { np.NovelaId, np.PersonajeId });
+            modelBuilder.Entity<NovelaBackground>()
+                .HasKey(nb => new { nb.NovelaId, nb.BackgroundId });
         }
     }
 }

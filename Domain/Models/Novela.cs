@@ -11,6 +11,8 @@ namespace Domain.Models
         public bool Disponible { get; set; }
         
         public ICollection<Escena> Escenas { get; set; }
+        public ICollection<NovelaPersonaje> Personajes { get; set; }
+        public ICollection<NovelaBackground> Backgrounds { get; set; }
         
         public Guid? UsuarioCreadorId { get; set; }
         public Usuario UsuarioCreador { get; set; }
