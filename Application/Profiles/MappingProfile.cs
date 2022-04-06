@@ -63,10 +63,6 @@ namespace Application.Profiles
             CreateMap<RecursoDecision, RecursoDecisionDto>();
             CreateMap<RecursoDecisionOpcion, RecursoDecisionOpcionDto>();
             
-            CreateMap<CreateRecursoDecisionOpcionDto, RecursoDecisionOpcion>();
-            CreateMap<CreateRecursoDto, RecursoDecision>();
-            CreateMap<CreateRecursoDto, RecursoConversacion>();
-            
             // Lectura
             CreateMap<LecturaDto, Lectura>();
             CreateMap<Lectura, LecturaDto>();
