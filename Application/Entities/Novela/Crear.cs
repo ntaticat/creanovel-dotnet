@@ -28,7 +28,7 @@ namespace Application.Entities.Novela
             public ExecuteValidation()
             {
                 RuleFor( x => x.Titulo ).NotEmpty();
-                RuleFor( x => x.Disponible ).NotEmpty();
+                RuleFor( x => x.Disponible ).Must(x => x == false || x == true);
             }
         }
 
