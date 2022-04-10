@@ -20,6 +20,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Domain.Models;
 using MediatR;
+using FluentValidation.AspNetCore;
+using WebAPI.Middlewares;
 
 namespace WebAPI
 {
@@ -71,7 +73,9 @@ namespace WebAPI
       );
       services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-      services.AddControllers().AddNewtonsoftJson(
+      services.AddControllers()
+        .AddFluentValidation( cfg => cfg.RegisterValidatorsFromAssemblyContaining<Application.Entities.Novela.Crear>() )
+        .AddNewtonsoftJson(
           options => options.SerializerSettings.ReferenceLoopHandling =
               Newtonsoft.Json.ReferenceLoopHandling.Ignore
       );
@@ -103,9 +107,11 @@ namespace WebAPI
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
+      app.UseMiddleware<ExceptionHandlerMiddleware>();
+
       if (env.IsDevelopment())
       {
-        app.UseDeveloperExceptionPage();
+        // app.UseDeveloperExceptionPage();
       }
 
       app.UseSwagger();

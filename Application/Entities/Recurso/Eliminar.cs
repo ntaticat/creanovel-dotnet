@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Handlers;
 using MediatR;
 using Persistence;
 
@@ -30,7 +32,7 @@ namespace Application.Entities.Recurso
 
                 if (recurso == null)
                 {
-                    throw new Exception("Recurso no encontrado");
+                    throw new ExceptionHandler(HttpStatusCode.NotFound, new { message = "Recurso no encontrado" });
                 }
                 
                 _context.Recursos.Remove(recurso);
@@ -42,7 +44,7 @@ namespace Application.Entities.Recurso
                     return Unit.Value;
                 }
 
-                throw new Exception("No se eliminó el recurso");
+                throw new ExceptionHandler(HttpStatusCode.NotFound, new { message = "No se eliminó el recurso" });
             }
         }
     }

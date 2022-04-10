@@ -1,9 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Entities.Novela.Dtos;
+using Application.Handlers;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -41,7 +41,7 @@ namespace Application.Entities.Novela
 
                 if (novela == null)
                 {
-                    throw new Exception("Novela no encontrada");
+                    throw new ExceptionHandler(HttpStatusCode.NotFound, new { message = "Novela no encontrada" });
                 }
 
                 var dbNovelaDto = _mapper.Map<NovelaWithEscenasDto>(novela);

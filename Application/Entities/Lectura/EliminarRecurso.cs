@@ -1,8 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Handlers;
 using AutoMapper;
 using MediatR;
 using Persistence;
@@ -35,7 +35,7 @@ namespace Application.Entities.Lectura
 
                 if (lecturaRecurso == null)
                 {
-                    throw new Exception("Lectura no encontrada");
+                    throw new ExceptionHandler(HttpStatusCode.NotFound, new { message = "Lectura no encontrada" });
                 }
 
                 _context.LecturaRecurso.Remove(lecturaRecurso);
@@ -47,7 +47,7 @@ namespace Application.Entities.Lectura
                     return Unit.Value;
                 }
 
-                throw new Exception("No se pudo eliminar la relación de Lectura y Recurso");            
+                throw new ExceptionHandler(HttpStatusCode.BadRequest, new { message = "No se pudo eliminar la relación de Lectura y Recurso" });
             }
         }
     }

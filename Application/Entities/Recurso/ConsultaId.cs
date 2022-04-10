@@ -1,9 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Entities.Recurso.Dtos;
+using Application.Handlers;
 using AutoMapper;
 using Domain.Models;
 using MediatR;
@@ -36,7 +36,7 @@ namespace Application.Entities.Recurso
 
                 if (recurso == null)
                 {
-                    throw new Exception("Recurso no encontrado");
+                    throw new ExceptionHandler(HttpStatusCode.NotFound, new { message = "Recurso no encontrado" });
                 }
 
                 var type = recurso.GetType();

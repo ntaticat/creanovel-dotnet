@@ -1,8 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Handlers;
 using Domain.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,7 @@ namespace Application.Entities.Recurso
                 
                 if (recurso == null)
                 {
-                    throw new Exception("Recurso no encontrado");
+                    throw new ExceptionHandler(HttpStatusCode.NotFound, new { message = "Recurso no encontrado" });
                 }
 
                 recurso.SiguienteRecursoId = request.RecursoSiguienteId;
@@ -44,7 +45,7 @@ namespace Application.Entities.Recurso
                     return Unit.Value;
                 }
 
-                throw new Exception("No se pudo asignar el siguiente recurso al recurso correspondiente");
+                throw new ExceptionHandler(HttpStatusCode.BadRequest, new { message = "No se pudo asignar el siguiente recurso al recurso correspondiente" });
             }
         }
     }

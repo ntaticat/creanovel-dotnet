@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Entities.Auth.Dtos;
-using AutoMapper;
+using Application.Handlers;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -27,15 +27,13 @@ namespace Application.Entities.Usuario
         public class Handler : IRequestHandler<Execute, ResponseCredentials>
         {
             private readonly CreanovelDbContext _context;
-            private readonly IMapper _mapper;
             private readonly SignInManager<Domain.Models.Usuario> _signInManager;
             private readonly UserManager<Domain.Models.Usuario> _userManager;
             private IConfiguration _configuration;
 
-      public Handler(CreanovelDbContext context, IMapper mapper, UserManager<Domain.Models.Usuario> userManager, IConfiguration configuration, SignInManager<Domain.Models.Usuario> signInManager)
+      public Handler(CreanovelDbContext context, UserManager<Domain.Models.Usuario> userManager, IConfiguration configuration, SignInManager<Domain.Models.Usuario> signInManager)
             {
                 _context = context;
-                _mapper = mapper;
                 _userManager = userManager;
                 _configuration = configuration;
                 _signInManager = signInManager;
@@ -47,7 +45,7 @@ namespace Application.Entities.Usuario
 
                 if (user == null)
                 {
-                    throw new Exception("Error al autenticarse");
+                    throw new ExceptionHandler(HttpStatusCode.BadRequest, new { message = "Error al autenticarse" });
                 }
 
                 var passwordChecked = await _signInManager.CheckPasswordSignInAsync(user, request.Password, lockoutOnFailure: false);
@@ -55,7 +53,7 @@ namespace Application.Entities.Usuario
 
                 if (!passwordChecked.Succeeded)
                 {
-                    throw new Exception("Error al autenticarse");
+                    throw new ExceptionHandler(HttpStatusCode.BadRequest, new { message = "Error al autenticarse" });
                 }
 
                 var token = CreateToken(user);

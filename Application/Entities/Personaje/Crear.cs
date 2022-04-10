@@ -1,9 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
+using Application.Handlers;
 using MediatR;
 using Persistence;
 
@@ -19,12 +18,10 @@ namespace Application.Entities.Personaje
         public class Handler : IRequestHandler<Execute>
         {
             private readonly CreanovelDbContext _context;
-            private readonly IMapper _mapper;
 
-            public Handler(CreanovelDbContext context, IMapper mapper)
+            public Handler(CreanovelDbContext context)
             {
                 _context = context;
-                _mapper = mapper;
             }
 
             public async Task<Unit> Handle(Execute request, CancellationToken cancellationToken)
@@ -40,7 +37,7 @@ namespace Application.Entities.Personaje
                     return Unit.Value;
                 }
 
-                throw new Exception("No se pudo registrar el personaje");            
+                throw new ExceptionHandler(HttpStatusCode.BadRequest, new { message = "No se pudo registrar el personaje" });
             }
         }
     }

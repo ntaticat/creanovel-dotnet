@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Entities.Usuario.Dtos;
+using Application.Handlers;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -41,7 +43,7 @@ namespace Application.Entities.Usuario
                 
                 if (usuario == null)
                 {
-                    throw new Exception("Usuario no encontrado");
+                    throw new ExceptionHandler(HttpStatusCode.NotFound, new { message = "Usuario no encontrado" });
                 }
                 
                 var dbUsuarioDto = _mapper.Map<UsuarioDto>(usuario);

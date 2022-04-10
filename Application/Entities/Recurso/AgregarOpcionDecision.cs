@@ -1,8 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Handlers;
 using Domain.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +35,7 @@ namespace Application.Entities.Recurso
                 
                 if (recurso == null)
                 {
-                    throw new Exception("El recurso de la opción no fue encontrado");
+                    throw new ExceptionHandler(HttpStatusCode.NotFound, new { message = "El recurso de la opción no fue encontrado" });
                 }
 
                 var opcion = new RecursoDecisionOpcion{
@@ -52,7 +53,7 @@ namespace Application.Entities.Recurso
                     return Unit.Value;
                 }
 
-                throw new Exception("No se pudo agregar la opción al recurso correspondiente");
+                throw new ExceptionHandler(HttpStatusCode.BadRequest, new { message = "No se pudo agregar la opción al recurso correspondiente" });
             }
         }
     }

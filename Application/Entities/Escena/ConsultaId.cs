@@ -1,9 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Entities.Escena.Dtos;
+using Application.Handlers;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +34,7 @@ namespace Application.Entities.Escena
                 
                 if (escena == null)
                 {
-                    throw new Exception("Escena no encontrada");
+                    throw new ExceptionHandler(HttpStatusCode.NotFound, new { message = "Escena no encontrada" });
                 }
                 
                 var escenaDto = _mapper.Map<EscenaRecursosDto>(escena);

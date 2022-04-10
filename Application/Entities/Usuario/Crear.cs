@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
+using Application.Handlers;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Persistence;
 
 namespace Application.Entities.Usuario
@@ -24,13 +24,11 @@ namespace Application.Entities.Usuario
         public class Handler : IRequestHandler<Execute>
         {
             private readonly CreanovelDbContext _context;
-            private readonly IMapper _mapper;
             private readonly UserManager<Domain.Models.Usuario> _userManager;
 
-            public Handler(CreanovelDbContext context, IMapper mapper, UserManager<Domain.Models.Usuario> userManager)
+            public Handler(CreanovelDbContext context, UserManager<Domain.Models.Usuario> userManager)
             {
                 _context = context;
-                _mapper = mapper;
                 _userManager = userManager;
             }
 
@@ -46,7 +44,7 @@ namespace Application.Entities.Usuario
 
                 if (!createdUsuario.Succeeded)
                 {
-                    throw new Exception("No se pudo registrar el usuario");
+                    throw new ExceptionHandler(HttpStatusCode.BadRequest, new { message = "No se pudo registrar el usuario" });
                 }
                 
                 return Unit.Value;

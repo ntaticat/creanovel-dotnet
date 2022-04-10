@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Entities.Novela.Dtos;
+using Application.Handlers;
 using AutoMapper;
+using FluentValidation;
 using MediatR;
 using Persistence;
 
@@ -20,15 +23,22 @@ namespace Application.Entities.Novela
             public Guid? UsuarioCreadorId { get; set; }
         }
 
+        public class ExecuteValidation : AbstractValidator<Execute>
+        {
+            public ExecuteValidation()
+            {
+                RuleFor( x => x.Titulo ).NotEmpty();
+                RuleFor( x => x.Disponible ).NotEmpty();
+            }
+        }
+
         public class Handler : IRequestHandler<Execute>
         {
             private readonly CreanovelDbContext _context;
-            private readonly IMapper _mapper;
 
-            public Handler(CreanovelDbContext context, IMapper mapper)
+            public Handler(CreanovelDbContext context)
             {
                 _context = context;
-                _mapper = mapper;
             }
 
             public async Task<Unit> Handle(Execute request, CancellationToken cancellationToken)
@@ -46,8 +56,8 @@ namespace Application.Entities.Novela
                 {
                     return Unit.Value;
                 }
-
-                throw new Exception("No se pudo registrar la novela");            
+                
+                throw new ExceptionHandler(HttpStatusCode.BadRequest, new { message = "No se pudo registrar la novela" });
             }
         }
   }
