@@ -10,5 +10,7 @@ namespace Application.Entities.Escena.Dtos
         public string Identificador { get; set; }
         public ICollection<RecursoDto> Recursos { get; set; }
         public Guid NovelaId { get; set; }
+        public bool PrimerEscena { get; set; }
+        public bool UltimaEscena { get; set; }
     }
 }

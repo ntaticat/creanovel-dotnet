@@ -15,6 +15,8 @@ namespace Application.Entities.Escena
             public Guid EscenaId { get; set; }
             public string Identificador { get; set; }
             public Guid? NovelaId { get; set; }
+            public bool? PrimerEscena { get; set; }
+            public bool? UltimaEscena { get; set; }
         }
 
         public class Handler : IRequestHandler<Execute>
@@ -37,6 +39,8 @@ namespace Application.Entities.Escena
 
                 escena.Identificador = request.Identificador ?? escena.Identificador;
                 escena.NovelaId = request.NovelaId ?? escena.NovelaId;
+                escena.PrimerEscena = request.PrimerEscena ?? escena.PrimerEscena;
+                escena.UltimaEscena = request.UltimaEscena ?? escena.UltimaEscena;
 
                 var result = await _context.SaveChangesAsync();
 

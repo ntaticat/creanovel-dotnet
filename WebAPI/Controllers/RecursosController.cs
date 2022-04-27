@@ -28,6 +28,12 @@ namespace WebAPI.Controllers
       return await _mediator.Send(new Application.Entities.Recurso.ConsultaId.RecursoUnico{ RecursoId = id });
     }
 
+    [HttpGet("first/{id}")]
+    public async Task<ActionResult<RecursoDto>> GetPrimerRecurso(Guid id)
+    {
+      return await _mediator.Send(new Application.Entities.Recurso.ObtenerPrimerRecursoNovela.RecursoUnico{ NovelaId = id });
+    }
+
     [HttpPost]
     public async Task<ActionResult<Unit>> PostRecurso([FromBody] Application.Entities.Recurso.Crear.Execute data)
     {

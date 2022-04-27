@@ -14,6 +14,8 @@ namespace Application.Entities.Escena
         {
             public string Identificador { get; set; }
             public Guid NovelaId { get; set; }
+            public bool PrimerEscena { get; set; }
+            public bool UltimaEscena { get; set; }
         }
 
         public class Handler : IRequestHandler<Execute>
@@ -29,7 +31,9 @@ namespace Application.Entities.Escena
             {
                 var escena = new Domain.Models.Escena {
                     Identificador = request.Identificador,
-                    NovelaId = request.NovelaId
+                    NovelaId = request.NovelaId,
+                    PrimerEscena = request.PrimerEscena,
+                    UltimaEscena = request.UltimaEscena
                 };
                 await this._context.Escenas.AddAsync(escena);
                 var result = await _context.SaveChangesAsync();
