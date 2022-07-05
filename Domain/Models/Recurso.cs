@@ -12,6 +12,7 @@ namespace Domain.Models
 
         public bool PrimerRecurso { get; set; }
         public bool UltimoRecurso { get; set; }
+        public string TipoRecurso { get; set; }
 
         public ICollection<LecturaRecursos> Lecturas { get; set; }
     }

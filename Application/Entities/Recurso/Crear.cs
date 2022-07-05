@@ -41,6 +41,7 @@ namespace Application.Entities.Recurso
                         Mensaje = request.Mensaje,
                         PrimerRecurso = request.PrimerRecurso,
                         UltimoRecurso = request.UltimoRecurso,
+                        TipoRecurso = request.TipoRecurso,
                         SiguienteRecursoId = request.SiguienteRecursoId ?? null
                     };
                     break;
@@ -49,7 +50,8 @@ namespace Application.Entities.Recurso
                         EscenaId = request.EscenaId,
                         DecisionMensaje = request.Mensaje,
                         PrimerRecurso = request.PrimerRecurso,
-                        UltimoRecurso = request.UltimoRecurso
+                        UltimoRecurso = request.UltimoRecurso,
+                        TipoRecurso = request.TipoRecurso
                     };
                     break;
                     default:
