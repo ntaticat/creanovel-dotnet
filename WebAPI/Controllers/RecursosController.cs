@@ -1,8 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Application.Entities.Recurso.Dtos;
+using Application.Commands.Recurso;
+using Application.Dtos.Recurso;
+using Application.Queries.Recurso;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,17 +25,17 @@ namespace WebAPI.Controllers
     [HttpGet("{id}")]
     public async Task<ActionResult<RecursoDto>> GetRecurso(Guid id)
     {
-      return await _mediator.Send(new Application.Entities.Recurso.ConsultaId.RecursoUnico{ RecursoId = id });
+      return await _mediator.Send(new GetRecursoByIdQuery.GetRecursoByIdQueryDto{ RecursoId = id });
     }
 
     [HttpGet("first/{id}")]
     public async Task<ActionResult<RecursoDto>> GetPrimerRecurso(Guid id)
     {
-      return await _mediator.Send(new Application.Entities.Recurso.ObtenerPrimerRecursoNovela.RecursoUnico{ NovelaId = id });
+      return await _mediator.Send(new GetFirstRecursoOfNovelaQuery.GetFirstRecursoOfNovelaQueryDto{ NovelaId = id });
     }
 
     [HttpPost]
-    public async Task<ActionResult<Unit>> PostRecurso([FromBody] Application.Entities.Recurso.Crear.Execute data)
+    public async Task<ActionResult<Unit>> PostRecurso([FromBody] CreateRecursoCommand.CreateRecursoCommandDto data)
     {
       return await _mediator.Send(data);
     }
@@ -43,11 +43,11 @@ namespace WebAPI.Controllers
     [HttpPost("{recursoId}/next/{recursoSiguienteId}")]
     public async Task<ActionResult<Unit>> PostSetRecursoSiguiente(Guid recursoId, Guid recursoSiguienteId)
     {
-      return await _mediator.Send(new Application.Entities.Recurso.AgregarSiguienteRecursoConversacion.Execute{ RecursoId = recursoId, RecursoSiguienteId = recursoSiguienteId });
+      return await _mediator.Send(new SetNextRecursoToRecursoCommand.SetNextRecursoToRecursoCommandDto{ RecursoId = recursoId, RecursoSiguienteId = recursoSiguienteId });
     }
 
     [HttpPost("opciones")]
-    public async Task<ActionResult<Unit>> PostOpcion([FromBody] Application.Entities.Recurso.AgregarOpcionDecision.Execute data)
+    public async Task<ActionResult<Unit>> PostOpcion([FromBody] AddRecursoDecisionOpcionCommand.AddRecursoDecisionOpcionCommandDto data)
     {
       return await _mediator.Send(data);
     }
@@ -55,7 +55,7 @@ namespace WebAPI.Controllers
     [HttpDelete("{id}")]
     public async Task<ActionResult<Unit>> DeleteRecurso(Guid id)
     {
-      return await _mediator.Send(new Application.Entities.Recurso.Eliminar.Execute{ RecursoId = id });
+      return await _mediator.Send(new DeleteRecursoCommand.DeleteRecursoCommandDto{ RecursoId = id });
     }
   }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Application.Commands.Lectura;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
 
@@ -17,13 +18,13 @@ namespace WebAPI.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult<Unit>> PostLectura([FromBody] Application.Entities.Lectura.Crear.Execute data)
+    public async Task<ActionResult<Unit>> PostLectura([FromBody] CreateLecturaCommand.CreateLecturaCommandDto data)
     {
       return await _mediator.Send(data);
     }
 
     [HttpPost("recursos")]
-    public async Task<ActionResult<Unit>> PostLecturaRecurso([FromBody] Application.Entities.Lectura.RegistrarRecurso.Execute data)
+    public async Task<ActionResult<Unit>> PostLecturaRecurso([FromBody] AddRecursoToLecturaCommand.AddRecursoToLecturaCommandDto data)
     {
       return await _mediator.Send(data);
     }
@@ -31,11 +32,11 @@ namespace WebAPI.Controllers
     [HttpDelete("{id}")]
     public async Task<ActionResult<Unit>> DeleteLectura(Guid id)
     {
-      return await _mediator.Send(new Application.Entities.Lectura.Eliminar.Execute{ LecturaId = id });
+      return await _mediator.Send(new DeleteLecturaCommand.DeleteLecturaCommandDto{ LecturaId = id });
     }
 
     [HttpDelete("recursos")]
-    public async Task<ActionResult<Unit>> DeleteLecturaRecurso(Application.Entities.Lectura.EliminarRecurso.Execute data)
+    public async Task<ActionResult<Unit>> DeleteLecturaRecurso(RemoveRecursoFromLecturaCommand.RemoveRecursoFromLecturaCommandDto data)
     {
       return await _mediator.Send(data);
     }

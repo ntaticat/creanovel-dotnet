@@ -1,21 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Application.Dtos.Auth;
+using Application.Dtos.Background;
+using Application.Dtos.BackgroundSprite;
+using Application.Dtos.Escena;
+using Application.Dtos.Lectura;
+using Application.Dtos.LecturaRecurso;
+using Application.Dtos.Novela;
+using Application.Dtos.NovelaBackground;
+using Application.Dtos.NovelaPersonaje;
+using Application.Dtos.Personaje;
+using Application.Dtos.PersonajeSprite;
+using Application.Dtos.Recurso;
+using Application.Dtos.Usuario;
 using AutoMapper;
-using Application.Entities.Auth.Dtos;
-using Application.Entities.Escena.Dtos;
-using Application.Entities.Lectura.Dtos;
-using Application.Entities.LecturaRecurso.Dtos;
-using Application.Entities.Novela.Dtos;
-using Application.Entities.Recurso.Dtos;
-using Application.Entities.Usuario.Dtos;
 using Domain.Models;
-using Application.Entities.NovelaPersonaje.Dtos;
-using Application.Entities.Personaje.Dtos;
-using Application.Entities.PersonajeSprite.Dtos;
-using Application.Entities.Background.Dtos;
-using Application.Entities.BackgroundSprite.Dtos;
-using Application.Entities.NovelaBackground.Dtos;
 
 namespace Application.Profiles
 {

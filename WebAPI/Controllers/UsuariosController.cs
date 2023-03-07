@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.Entities.Auth.Dtos;
-using Application.Entities.Usuario.Dtos;
+using Application.Commands.Usuario;
+using Application.Dtos.Auth;
+using Application.Dtos.Usuario;
+using Application.Queries.Usuario;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,17 +27,17 @@ namespace WebAPI.Controllers
     [HttpGet("{id}")]
     public async Task<ActionResult<UsuarioDto>> GetUsuario(Guid id)
     {
-      return await _mediator.Send(new Application.Entities.Usuario.ConsultaId.UsuarioUnico{ UsuarioId = id });
+      return await _mediator.Send(new GetUsuarioByIdQuery.GetUsuarioByIdQueryDto{ UsuarioId = id });
     }
 
     [HttpPost]
-    public async Task<ActionResult<Unit>> PostUsuario([FromBody] Application.Entities.Usuario.Crear.Execute data)
+    public async Task<ActionResult<Unit>> PostUsuario([FromBody] CreateUsuarioCommand.CreateUsuarioCommandDto data)
     {
       return await _mediator.Send(data);
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<ResponseCredentials>> Login([FromBody] Application.Entities.Usuario.Login.Execute data)
+    public async Task<ActionResult<ResponseCredentials>> Login([FromBody] LogInUsuarioCommand.LogInUsuarioCommandDto data)
     {
       return await _mediator.Send(data);
     }

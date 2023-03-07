@@ -1,6 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using Application.Entities.Escena.Dtos;
+using Application.Commands.Escena;
+using Application.Dtos.Escena;
+using Application.Queries.Escena;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
 
@@ -20,17 +22,17 @@ namespace WebAPI.Controllers
     [HttpGet("{id}")]
     public async Task<ActionResult<EscenaRecursosDto>> GetEscenaRecursos(Guid id)
     {
-      return await _mediator.Send(new Application.Entities.Escena.ConsultaId.EscenaUnica{ EscenaId = id });
+      return await _mediator.Send(new GetEscenaByIdQuery.GetEscenaByIdQueryDto{ EscenaId = id });
     }
 
     [HttpPost]
-    public async Task<ActionResult<Unit>> PostEscena([FromBody] Application.Entities.Escena.Crear.Execute data)
+    public async Task<ActionResult<Unit>> PostEscena([FromBody] CreateEscenaCommand.CreateEscenaCommandDto data)
     {
       return await _mediator.Send(data);
     }
 
     [HttpPatch("{id}")]
-    public async Task<ActionResult<Unit>> PatchEscena(Guid id, [FromBody] Application.Entities.Escena.Editar.Execute data)
+    public async Task<ActionResult<Unit>> PatchEscena(Guid id, [FromBody] UpdateEscenaCommand.UpdateEscenaCommandDto data)
     {
       data.EscenaId = id;
       return await _mediator.Send(data);
@@ -39,7 +41,7 @@ namespace WebAPI.Controllers
     [HttpDelete("{id}")]
     public async Task<ActionResult<Unit>> DeleteEscena(Guid id)
     {
-      return await _mediator.Send(new Application.Entities.Escena.Eliminar.Execute{ EscenaId = id });
+      return await _mediator.Send(new DeleteEscenaCommand.DeleteEscenaCommandDto{ EscenaId = id });
     }
   }
 }

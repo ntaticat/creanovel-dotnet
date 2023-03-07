@@ -1,21 +1,16 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+using Application.Commands.Novela;
+using Application.Queries.Novela;
 using Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Domain.Models;
@@ -60,9 +55,9 @@ namespace WebAPI
       identityBuilder.AddSignInManager<SignInManager<Usuario>>();
 
       services.AddCors(options => options.AddDefaultPolicy(
-          builder =>
+          corsPolicyBuilder =>
           {
-            builder.WithOrigins("http://localhost:4200").AllowAnyHeader();
+            corsPolicyBuilder.WithOrigins("http://localhost:4200").AllowAnyHeader();
           }
       ));
 
@@ -74,13 +69,13 @@ namespace WebAPI
       services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
       services.AddControllers()
-        .AddFluentValidation( cfg => cfg.RegisterValidatorsFromAssemblyContaining<Application.Entities.Novela.Crear>() )
+        .AddFluentValidation( cfg => cfg.RegisterValidatorsFromAssemblyContaining<CreateNovelaCommand>() )
         .AddNewtonsoftJson(
           options => options.SerializerSettings.ReferenceLoopHandling =
               Newtonsoft.Json.ReferenceLoopHandling.Ignore
       );
 
-      services.AddMediatR(typeof(Application.Entities.Novela.Consulta.Handler).Assembly);
+      services.AddMediatR(typeof(GetNovelasQuery.Handler).Assembly);
     }
 
     private void AddSwagger(IServiceCollection services)
@@ -90,13 +85,13 @@ namespace WebAPI
           var groupName = "v1";
           options.SwaggerDoc(groupName, new OpenApiInfo
           {
-            Title = $"WebAPI {groupName}",
+            Title = $"CreaNovel Web API {groupName}",
             Version = groupName,
-            Description = "CreaNovel Web API",
+            Description = "RESTful API for create, manage and read visual novels",
             Contact = new OpenApiContact
             {
               Name = "Rafael Estrada",
-              Email = string.Empty,
+              Email = "ntaticat@gmail.com",
               Url = new Uri("http://github.com/ntaticat")
             }
           });

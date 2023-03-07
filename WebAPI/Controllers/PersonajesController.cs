@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Commands.Personaje;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +20,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Unit>> PostPersonaje([FromBody] Application.Entities.Personaje.Crear.Execute data)
+        public async Task<ActionResult<Unit>> PostPersonaje([FromBody] CreatePersonajeCommand.CreatePersonajeCommandDto data)
         {
             return await _mediator.Send(data);
         }
