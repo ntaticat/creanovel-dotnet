@@ -3,11 +3,14 @@ using System.Threading.Tasks;
 using Application.Commands.Lectura;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
 {
   [ApiController]
   [Route("api/[controller]")]
+  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
   public class LecturasController : ControllerBase
   {
     private readonly IMediator _mediator;

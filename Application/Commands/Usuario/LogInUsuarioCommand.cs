@@ -45,7 +45,7 @@ namespace Application.Commands.Usuario
 
                 if (user == null)
                 {
-                    throw new ExceptionHandler(HttpStatusCode.BadRequest, new { message = "Error al autenticarse" });
+                    throw new ExceptionHandler(HttpStatusCode.Unauthorized, new { message = "Error al autenticarse" });
                 }
 
                 var passwordChecked = await _signInManager.CheckPasswordSignInAsync(user, request.Password, lockoutOnFailure: false);
@@ -53,7 +53,7 @@ namespace Application.Commands.Usuario
 
                 if (!passwordChecked.Succeeded)
                 {
-                    throw new ExceptionHandler(HttpStatusCode.BadRequest, new { message = "Error al autenticarse" });
+                    throw new ExceptionHandler(HttpStatusCode.Unauthorized, new { message = "Error al autenticarse" });
                 }
 
                 var token = CreateToken(user);

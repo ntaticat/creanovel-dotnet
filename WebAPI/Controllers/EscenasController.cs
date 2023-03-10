@@ -5,11 +5,14 @@ using Application.Dtos.Escena;
 using Application.Queries.Escena;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
 {
   [ApiController]
   [Route("api/[controller]")]
+  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
   public class EscenasController : ControllerBase
   {
     private readonly IMediator _mediator;
