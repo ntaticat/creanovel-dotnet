@@ -11,13 +11,13 @@ namespace Application.Commands.Lectura
 {
     public class RemoveRecursoFromLecturaCommand
     {
-        public class RemoveRecursoFromLecturaCommandDto : IRequest
+        public class RemoveRecursoFromLecturaCommandRequest : IRequest
         {
             public Guid LecturaId { get; set; }
             public Guid RecursoId { get; set; }
         }
 
-        public class Handler : IRequestHandler<RemoveRecursoFromLecturaCommandDto>
+        public class Handler : IRequestHandler<RemoveRecursoFromLecturaCommandRequest>
         {
             private readonly CreanovelDbContext _context;
             private readonly IMapper _mapper;
@@ -28,7 +28,7 @@ namespace Application.Commands.Lectura
                 _mapper = mapper;
             }
 
-            public async Task<Unit> Handle(RemoveRecursoFromLecturaCommandDto request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(RemoveRecursoFromLecturaCommandRequest request, CancellationToken cancellationToken)
             {
 
                 var lecturaRecurso = await _context.LecturaRecurso.FindAsync(request.LecturaId, request.RecursoId);

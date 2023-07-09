@@ -20,7 +20,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Unit>> PostPersonaje([FromBody] CreatePersonajeCommand.CreatePersonajeCommandDto data)
+        public async Task<ActionResult<Unit>> PostPersonaje([FromBody] CreatePersonajeCommand.CreatePersonajeCommandRequest data)
         {
             return await _mediator.Send(data);
         }

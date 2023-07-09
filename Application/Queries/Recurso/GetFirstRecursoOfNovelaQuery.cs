@@ -16,11 +16,11 @@ namespace Application.Queries.Recurso
 {
     public class GetFirstRecursoOfNovelaQuery
     {
-        public class GetFirstRecursoOfNovelaQueryDto : IRequest<RecursoDto> {
+        public class GetFirstRecursoOfNovelaQueryRequest : IRequest<RecursoDto> {
             public Guid NovelaId { get; set; }
         }
 
-        public class Handler : IRequestHandler<GetFirstRecursoOfNovelaQueryDto, RecursoDto>
+        public class Handler : IRequestHandler<GetFirstRecursoOfNovelaQueryRequest, RecursoDto>
         {
             private readonly CreanovelDbContext _context;
             private readonly IMapper _mapper;
@@ -31,7 +31,7 @@ namespace Application.Queries.Recurso
                 _mapper = mapper;
             }
 
-            public async Task<RecursoDto> Handle(GetFirstRecursoOfNovelaQueryDto request, CancellationToken cancellationToken)
+            public async Task<RecursoDto> Handle(GetFirstRecursoOfNovelaQueryRequest request, CancellationToken cancellationToken)
             {
                 var novela = await _context.Novelas.Include(n => n.Escenas).FirstOrDefaultAsync(n => n.NovelaId == request.NovelaId);
 

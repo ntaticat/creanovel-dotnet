@@ -13,12 +13,12 @@ namespace Application.Queries.Usuario
 {
     public class GetUsuarioByIdQuery
     {
-        public class GetUsuarioByIdQueryDto : IRequest<UsuarioDto> 
+        public class GetUsuarioByIdQueryRequest : IRequest<UsuarioDto> 
         {
             public Guid UsuarioId { get; set; }
         }
 
-        public class Handler : IRequestHandler<GetUsuarioByIdQueryDto, UsuarioDto>
+        public class Handler : IRequestHandler<GetUsuarioByIdQueryRequest, UsuarioDto>
         {
             private readonly CreanovelDbContext _context;
             private readonly IMapper _mapper;
@@ -29,7 +29,7 @@ namespace Application.Queries.Usuario
                 _mapper = mapper;
             }
 
-            public async Task<UsuarioDto> Handle(GetUsuarioByIdQueryDto request, CancellationToken cancellationToken)
+            public async Task<UsuarioDto> Handle(GetUsuarioByIdQueryRequest request, CancellationToken cancellationToken)
             {
                 var usuario = await _context.Usuarios
                     .Include(u => u.Lecturas)

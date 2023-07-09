@@ -25,35 +25,35 @@ namespace WebAPI.Controllers
     [HttpGet]
     public async Task<ActionResult<List<NovelaNoEscenasDto>>> GetNovelas()
     {
-      return await _mediator.Send(new GetNovelasQuery.GetNovelasQueryDto());
+      return await _mediator.Send(new GetNovelasQuery.GetNovelasQueryRequest());
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<NovelaNoEscenasDto>> GetNovela(Guid id)
     {
-      return await _mediator.Send(new GetNovelaByIdQuery.GetNovelaByIdQueryDto{ NovelaId = id });
+      return await _mediator.Send(new GetNovelaByIdQuery.GetNovelaByIdQueryRequest{ NovelaId = id });
     }
 
     [HttpGet("{id}/escenas")]
     public async Task<ActionResult<NovelaWithEscenasDto>> GetNovelaWithEscenas(Guid id)
     {
-      return await _mediator.Send(new GetNovelaByIdWithEscenasQuery.GetNovelaByIdWithEscenasQueryDto{ NovelaId =  id });
+      return await _mediator.Send(new GetNovelaByIdWithEscenasQuery.GetNovelaByIdWithEscenasQueryRequest{ NovelaId =  id });
     }
 
     [HttpPost]
-    public async Task<ActionResult<Unit>> PostNovela([FromBody] CreateNovelaCommand.CreateNovelaCommandDto data)
+    public async Task<ActionResult<Unit>> PostNovela([FromBody] CreateNovelaCommand.CreateNovelaCommandRequest data)
     {
       return await _mediator.Send(data);
     }
 
     [HttpPost("personajes")]
-    public async Task<ActionResult<Unit>> PostNovelaPersonaje([FromBody] RegisterPersonajeToNovelaCommand.RegisterPersonajeToNovelaCommandDto data)
+    public async Task<ActionResult<Unit>> PostNovelaPersonaje([FromBody] RegisterPersonajeToNovelaCommand.RegisterPersonajeToNovelaCommandRequest data)
     {
       return await _mediator.Send(data);
     }
 
     [HttpPatch("{id}")]
-    public async Task<ActionResult<Unit>> PatchNovela(Guid id, [FromBody] UpdateNovelaCommand.UpdateNovelaCommandDto data)
+    public async Task<ActionResult<Unit>> PatchNovela(Guid id, [FromBody] UpdateNovelaCommand.UpdateNovelaCommandRequest data)
     {
       data.NovelaId = id;
       return await _mediator.Send(data);
@@ -62,7 +62,7 @@ namespace WebAPI.Controllers
     [HttpDelete("{id}")]
     public async Task<ActionResult<Unit>> DeleteNovela(Guid id)
     {
-      return await _mediator.Send(new DeleteNovelaCommand.DeleteNovelaCommandDto{ NovelaId =  id });
+      return await _mediator.Send(new DeleteNovelaCommand.DeleteNovelaCommandRequest{ NovelaId =  id });
     }
   }
 }

@@ -14,7 +14,7 @@ namespace Application.Commands.Novela
 {
     public class CreateNovelaCommand
     {
-        public class CreateNovelaCommandDto : IRequest 
+        public class CreateNovelaCommandRequest : IRequest 
         {
             public string Titulo { get; set; }
             public string Descripcion { get; set; }
@@ -22,7 +22,7 @@ namespace Application.Commands.Novela
             public Guid? UsuarioCreadorId { get; set; }
         }
 
-        public class ExecuteValidation : AbstractValidator<CreateNovelaCommandDto>
+        public class ExecuteValidation : AbstractValidator<CreateNovelaCommandRequest>
         {
             public ExecuteValidation()
             {
@@ -31,7 +31,7 @@ namespace Application.Commands.Novela
             }
         }
 
-        public class Handler : IRequestHandler<CreateNovelaCommandDto>
+        public class Handler : IRequestHandler<CreateNovelaCommandRequest>
         {
             private readonly CreanovelDbContext _context;
 
@@ -40,7 +40,7 @@ namespace Application.Commands.Novela
                 _context = context;
             }
 
-            public async Task<Unit> Handle(CreateNovelaCommandDto request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(CreateNovelaCommandRequest request, CancellationToken cancellationToken)
             {
                 var novela = new Domain.Models.Novela {
                     Titulo = request.Titulo, 

@@ -12,12 +12,12 @@ namespace Application.Commands.Recurso
 {
     public class DeleteRecursoCommand
     {
-        public class DeleteRecursoCommandDto : IRequest
+        public class DeleteRecursoCommandRequest : IRequest
         {
             public Guid RecursoId { get; set; }
         }
 
-        public class Handler : IRequestHandler<DeleteRecursoCommandDto>
+        public class Handler : IRequestHandler<DeleteRecursoCommandRequest>
         {
             private readonly CreanovelDbContext _context;
 
@@ -26,7 +26,7 @@ namespace Application.Commands.Recurso
                 _context = context;
             }
 
-            public async Task<Unit> Handle(DeleteRecursoCommandDto request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(DeleteRecursoCommandRequest request, CancellationToken cancellationToken)
             {
                 var recurso = await _context.Recursos.FindAsync(request.RecursoId);
 

@@ -10,7 +10,7 @@ namespace Application.Commands.Recurso;
 
 public class CreateRecursoConversacionCommand
 {
-    public class CreateRecursoConversacionCommandDto : IRequest
+    public class CreateRecursoConversacionCommandRequest : IRequest
     {
         public Guid EscenaId { get; set; }
         public string TipoRecurso { get; set; }
@@ -20,7 +20,7 @@ public class CreateRecursoConversacionCommand
         public Guid? SiguienteRecursoId { get; set; }
     }
     
-    public class Handler : IRequestHandler<CreateRecursoConversacionCommandDto>
+    public class Handler : IRequestHandler<CreateRecursoConversacionCommandRequest>
         {
             private readonly CreanovelDbContext _context;
 
@@ -29,7 +29,7 @@ public class CreateRecursoConversacionCommand
                 _context = context;
             }
 
-            public async Task<Unit> Handle(CreateRecursoConversacionCommandDto request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(CreateRecursoConversacionCommandRequest request, CancellationToken cancellationToken)
             {
                 var recurso = new Domain.Models.RecursoConversacion{
                     EscenaId = request.EscenaId,

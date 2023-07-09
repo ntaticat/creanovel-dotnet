@@ -18,13 +18,13 @@ namespace Application.Commands.Usuario
 {
     public class LogInUsuarioCommand
     {
-        public class LogInUsuarioCommandDto : IRequest<ResponseCredentials>
+        public class LogInUsuarioCommandRequest : IRequest<ResponseCredentials>
         {
             public string Email { get; set; }
             public string Password { get; set; }
         }
 
-        public class Handler : IRequestHandler<LogInUsuarioCommandDto, ResponseCredentials>
+        public class Handler : IRequestHandler<LogInUsuarioCommandRequest, ResponseCredentials>
         {
             private readonly CreanovelDbContext _context;
             private readonly SignInManager<Domain.Models.Usuario> _signInManager;
@@ -39,7 +39,7 @@ namespace Application.Commands.Usuario
                 _signInManager = signInManager;
             }
 
-            public async Task<ResponseCredentials> Handle(LogInUsuarioCommandDto request, CancellationToken cancellationToken)
+            public async Task<ResponseCredentials> Handle(LogInUsuarioCommandRequest request, CancellationToken cancellationToken)
             {
                 var user = await _userManager.FindByEmailAsync(request.Email);
 

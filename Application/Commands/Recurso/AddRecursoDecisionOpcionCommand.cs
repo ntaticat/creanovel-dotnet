@@ -13,14 +13,14 @@ namespace Application.Commands.Recurso
 {
     public class AddRecursoDecisionOpcionCommand
     {
-        public class AddRecursoDecisionOpcionCommandDto : IRequest 
+        public class AddRecursoDecisionOpcionCommandRequest : IRequest 
         {
             public string OpcionMensaje { get; set; }
             public Guid? SiguienteRecursoId { get; set; }
             public Guid RecursoDecisionId { get; set; }
         }
 
-        public class Handler : IRequestHandler<AddRecursoDecisionOpcionCommandDto>
+        public class Handler : IRequestHandler<AddRecursoDecisionOpcionCommandRequest>
         {
             private readonly CreanovelDbContext _context;
 
@@ -29,7 +29,7 @@ namespace Application.Commands.Recurso
                 _context = context;
             }
 
-            public async Task<Unit> Handle(AddRecursoDecisionOpcionCommandDto request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(AddRecursoDecisionOpcionCommandRequest request, CancellationToken cancellationToken)
             {
                 var recurso = await _context.Recursos.OfType<RecursoDecision>().FirstOrDefaultAsync(r => r.RecursoId == request.RecursoDecisionId);
                 

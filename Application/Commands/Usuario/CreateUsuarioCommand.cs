@@ -13,7 +13,7 @@ namespace Application.Commands.Usuario
 {
     public class CreateUsuarioCommand
     {
-        public class CreateUsuarioCommandDto : IRequest
+        public class CreateUsuarioCommandRequest : IRequest
         {
             public string Nombre { get; set; }
             public string Email { get; set; }
@@ -21,7 +21,7 @@ namespace Application.Commands.Usuario
             public string Password { get; set; }
         }
 
-        public class Handler : IRequestHandler<CreateUsuarioCommandDto>
+        public class Handler : IRequestHandler<CreateUsuarioCommandRequest>
         {
             private readonly CreanovelDbContext _context;
             private readonly UserManager<Domain.Models.Usuario> _userManager;
@@ -32,7 +32,7 @@ namespace Application.Commands.Usuario
                 _userManager = userManager;
             }
 
-            public async Task<Unit> Handle(CreateUsuarioCommandDto request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(CreateUsuarioCommandRequest request, CancellationToken cancellationToken)
             {
                 var usuario = new Domain.Models.Usuario {
                     Nombre = request.Nombre,

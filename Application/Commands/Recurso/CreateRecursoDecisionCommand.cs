@@ -10,7 +10,7 @@ namespace Application.Commands.Recurso;
 
 public class CreateRecursoDecisionCommand
 {
-    public class CreateRecursoDecisionCommandDto : IRequest
+    public class CreateRecursoDecisionCommandRequest : IRequest
     {
         public Guid EscenaId { get; set; }
         public string TipoRecurso { get; set; }
@@ -19,7 +19,7 @@ public class CreateRecursoDecisionCommand
         public string DecisionMensaje { get; set; }
     }
     
-    public class Handler : IRequestHandler<CreateRecursoDecisionCommandDto>
+    public class Handler : IRequestHandler<CreateRecursoDecisionCommandRequest>
     {
         private readonly CreanovelDbContext _context;
 
@@ -28,7 +28,7 @@ public class CreateRecursoDecisionCommand
             _context = context;
         }
 
-        public async Task<Unit> Handle(CreateRecursoDecisionCommandDto request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateRecursoDecisionCommandRequest request, CancellationToken cancellationToken)
         {
             var recurso = new Domain.Models.RecursoDecision{
                 EscenaId = request.EscenaId,

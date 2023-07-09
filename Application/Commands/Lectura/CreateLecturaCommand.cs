@@ -10,13 +10,13 @@ namespace Application.Commands.Lectura
 {
     public class CreateLecturaCommand
     {
-        public class CreateLecturaCommandDto : IRequest 
+        public class CreateLecturaCommandRequest : IRequest 
         {
             public Guid NovelaRegistrosId { get; set; }
             public Guid UsuarioPropietarioId { get; set; }
         }
 
-        public class Handler : IRequestHandler<CreateLecturaCommandDto>
+        public class Handler : IRequestHandler<CreateLecturaCommandRequest>
         {
             private readonly CreanovelDbContext _context;
 
@@ -25,7 +25,7 @@ namespace Application.Commands.Lectura
                 _context = context;
             }
 
-            public async Task<Unit> Handle(CreateLecturaCommandDto request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(CreateLecturaCommandRequest request, CancellationToken cancellationToken)
             {
                 var lectura = new Domain.Models.Lectura {
                     NovelaRegistrosId = request.NovelaRegistrosId,

@@ -21,13 +21,13 @@ namespace WebAPI.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult<Unit>> PostLectura([FromBody] CreateLecturaCommand.CreateLecturaCommandDto data)
+    public async Task<ActionResult<Unit>> PostLectura([FromBody] CreateLecturaCommand.CreateLecturaCommandRequest data)
     {
       return await _mediator.Send(data);
     }
 
     [HttpPost("recursos")]
-    public async Task<ActionResult<Unit>> PostLecturaRecurso([FromBody] AddRecursoToLecturaCommand.AddRecursoToLecturaCommandDto data)
+    public async Task<ActionResult<Unit>> PostLecturaRecurso([FromBody] AddRecursoToLecturaCommand.AddRecursoToLecturaCommandRequest data)
     {
       return await _mediator.Send(data);
     }
@@ -35,11 +35,11 @@ namespace WebAPI.Controllers
     [HttpDelete("{id}")]
     public async Task<ActionResult<Unit>> DeleteLectura(Guid id)
     {
-      return await _mediator.Send(new DeleteLecturaCommand.DeleteLecturaCommandDto{ LecturaId = id });
+      return await _mediator.Send(new DeleteLecturaCommand.DeleteLecturaCommandRequest{ LecturaId = id });
     }
 
     [HttpDelete("recursos")]
-    public async Task<ActionResult<Unit>> DeleteLecturaRecurso(RemoveRecursoFromLecturaCommand.RemoveRecursoFromLecturaCommandDto data)
+    public async Task<ActionResult<Unit>> DeleteLecturaRecurso(RemoveRecursoFromLecturaCommand.RemoveRecursoFromLecturaCommandRequest data)
     {
       return await _mediator.Send(data);
     }

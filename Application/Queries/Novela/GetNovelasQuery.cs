@@ -14,9 +14,9 @@ namespace Application.Queries.Novela
 {
     public class GetNovelasQuery
     {
-        public class GetNovelasQueryDto : IRequest<List<NovelaNoEscenasDto>> {}
+        public class GetNovelasQueryRequest : IRequest<List<NovelaNoEscenasDto>> {}
 
-        public class Handler : IRequestHandler<GetNovelasQueryDto, List<NovelaNoEscenasDto>>
+        public class Handler : IRequestHandler<GetNovelasQueryRequest, List<NovelaNoEscenasDto>>
         {
             private readonly CreanovelDbContext _context;
             private readonly IMapper _mapper;
@@ -27,7 +27,7 @@ namespace Application.Queries.Novela
                 _mapper = mapper;
             }
 
-            public async Task<List<NovelaNoEscenasDto>> Handle(GetNovelasQueryDto request, CancellationToken cancellationToken)
+            public async Task<List<NovelaNoEscenasDto>> Handle(GetNovelasQueryRequest request, CancellationToken cancellationToken)
             {
                 var dbNovelas = await _context.Novelas.ToListAsync();
                 var novelasDto = _mapper.Map<List<NovelaNoEscenasDto>>(dbNovelas);

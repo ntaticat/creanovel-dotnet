@@ -13,7 +13,7 @@ namespace Application.Commands.Novela
 {
     public class UpdateNovelaCommand
     {
-        public class UpdateNovelaCommandDto : IRequest
+        public class UpdateNovelaCommandRequest : IRequest
         {
             public Guid NovelaId { get; set; }
             public string Titulo { get; set; }
@@ -22,7 +22,7 @@ namespace Application.Commands.Novela
             public Guid? UsuarioCreadorId { get; set; }
         }
 
-        public class Handler : IRequestHandler<UpdateNovelaCommandDto>
+        public class Handler : IRequestHandler<UpdateNovelaCommandRequest>
         {
             private readonly CreanovelDbContext _context;
 
@@ -31,7 +31,7 @@ namespace Application.Commands.Novela
                 _context = context;
             }
 
-            public async Task<Unit> Handle(UpdateNovelaCommandDto request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(UpdateNovelaCommandRequest request, CancellationToken cancellationToken)
             {
                 var novela = await _context.Novelas.FindAsync(request.NovelaId);
 

@@ -13,12 +13,12 @@ namespace Application.Commands.Novela
 {
     public class DeleteNovelaCommand
     {
-        public class DeleteNovelaCommandDto : IRequest
+        public class DeleteNovelaCommandRequest : IRequest
         {
             public Guid NovelaId { get; set; }
         }
 
-        public class Handler : IRequestHandler<DeleteNovelaCommandDto>
+        public class Handler : IRequestHandler<DeleteNovelaCommandRequest>
         {
             private readonly CreanovelDbContext _context;
 
@@ -27,7 +27,7 @@ namespace Application.Commands.Novela
                 _context = context;
             }
 
-            public async Task<Unit> Handle(DeleteNovelaCommandDto request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(DeleteNovelaCommandRequest request, CancellationToken cancellationToken)
             {
                 var novela = await _context.Novelas.FindAsync(request.NovelaId);
 

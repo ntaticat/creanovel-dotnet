@@ -10,7 +10,7 @@ namespace Application.Commands.Escena
 {
     public class CreateEscenaCommand
     {
-        public class CreateEscenaCommandDto : IRequest
+        public class CreateEscenaCommandRequest : IRequest
         {
             public string Identificador { get; set; }
             public Guid NovelaId { get; set; }
@@ -18,7 +18,7 @@ namespace Application.Commands.Escena
             public bool UltimaEscena { get; set; }
         }
 
-        public class Handler : IRequestHandler<CreateEscenaCommandDto>
+        public class Handler : IRequestHandler<CreateEscenaCommandRequest>
         {
             private readonly CreanovelDbContext _context;
 
@@ -27,7 +27,7 @@ namespace Application.Commands.Escena
                 _context = context;
             }
 
-            public async Task<Unit> Handle(CreateEscenaCommandDto request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(CreateEscenaCommandRequest request, CancellationToken cancellationToken)
             {
                 var escena = new Domain.Models.Escena {
                     Identificador = request.Identificador,

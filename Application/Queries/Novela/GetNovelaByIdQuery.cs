@@ -12,12 +12,12 @@ namespace Application.Queries.Novela
 {
     public class GetNovelaByIdQuery
     {
-        public class GetNovelaByIdQueryDto : IRequest<NovelaNoEscenasDto> 
+        public class GetNovelaByIdQueryRequest : IRequest<NovelaNoEscenasDto> 
         {
             public Guid NovelaId { get; set; }
         }
 
-        public class Handler : IRequestHandler<GetNovelaByIdQueryDto, NovelaNoEscenasDto>
+        public class Handler : IRequestHandler<GetNovelaByIdQueryRequest, NovelaNoEscenasDto>
         {
             private readonly CreanovelDbContext _context;
             private readonly IMapper _mapper;
@@ -28,7 +28,7 @@ namespace Application.Queries.Novela
                 _mapper = mapper;
             }
 
-            public async Task<NovelaNoEscenasDto> Handle(GetNovelaByIdQueryDto request, CancellationToken cancellationToken)
+            public async Task<NovelaNoEscenasDto> Handle(GetNovelaByIdQueryRequest request, CancellationToken cancellationToken)
             {
                 var novela = await _context.Novelas.FindAsync(request.NovelaId);
 

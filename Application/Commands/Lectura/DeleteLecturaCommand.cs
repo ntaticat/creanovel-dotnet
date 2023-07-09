@@ -10,12 +10,12 @@ namespace Application.Commands.Lectura
 {
     public class DeleteLecturaCommand
     {
-        public class DeleteLecturaCommandDto : IRequest
+        public class DeleteLecturaCommandRequest : IRequest
         {
             public Guid LecturaId { get; set; }
         }
 
-        public class Handler : IRequestHandler<DeleteLecturaCommandDto>
+        public class Handler : IRequestHandler<DeleteLecturaCommandRequest>
         {
             private readonly CreanovelDbContext _context;
 
@@ -24,7 +24,7 @@ namespace Application.Commands.Lectura
                 _context = context;
             }
 
-            public async Task<Unit> Handle(DeleteLecturaCommandDto request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(DeleteLecturaCommandRequest request, CancellationToken cancellationToken)
             {
 
                 var lectura = await _context.Lecturas.FindAsync(request.LecturaId);

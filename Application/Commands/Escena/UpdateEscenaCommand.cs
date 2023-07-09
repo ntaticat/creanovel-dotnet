@@ -10,7 +10,7 @@ namespace Application.Commands.Escena
 {
     public class UpdateEscenaCommand
     {
-        public class UpdateEscenaCommandDto : IRequest
+        public class UpdateEscenaCommandRequest : IRequest
         {
             public Guid EscenaId { get; set; }
             public string Identificador { get; set; }
@@ -19,7 +19,7 @@ namespace Application.Commands.Escena
             public bool? UltimaEscena { get; set; }
         }
 
-        public class Handler : IRequestHandler<UpdateEscenaCommandDto>
+        public class Handler : IRequestHandler<UpdateEscenaCommandRequest>
         {
             private readonly CreanovelDbContext _context;
 
@@ -28,7 +28,7 @@ namespace Application.Commands.Escena
                 _context = context;
             }
 
-            public async Task<Unit> Handle(UpdateEscenaCommandDto request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(UpdateEscenaCommandRequest request, CancellationToken cancellationToken)
             {
                 var escena = await _context.Escenas.FindAsync(request.EscenaId);
 

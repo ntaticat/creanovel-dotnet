@@ -10,13 +10,13 @@ namespace Application.Commands.Novela
 {
     public class RegisterPersonajeToNovelaCommand
     {
-        public class RegisterPersonajeToNovelaCommandDto : IRequest
+        public class RegisterPersonajeToNovelaCommandRequest : IRequest
         {
             public Guid NovelaId { get; set; }
             public Guid PersonajeId { get; set; }
         }
 
-        public class Handler : IRequestHandler<RegisterPersonajeToNovelaCommandDto>
+        public class Handler : IRequestHandler<RegisterPersonajeToNovelaCommandRequest>
         {
             private readonly CreanovelDbContext _context;
 
@@ -25,7 +25,7 @@ namespace Application.Commands.Novela
                 _context = context;
             }
 
-            public async Task<Unit> Handle(RegisterPersonajeToNovelaCommandDto request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(RegisterPersonajeToNovelaCommandRequest request, CancellationToken cancellationToken)
             {
                 var novelaPersonaje = new Domain.Models.NovelaPersonaje {
                     NovelaId = request.NovelaId,

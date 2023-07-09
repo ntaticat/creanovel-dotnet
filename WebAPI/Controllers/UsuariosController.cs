@@ -27,17 +27,17 @@ namespace WebAPI.Controllers
     [HttpGet("{id}")]
     public async Task<ActionResult<UsuarioDto>> GetUsuario(Guid id)
     {
-      return await _mediator.Send(new GetUsuarioByIdQuery.GetUsuarioByIdQueryDto{ UsuarioId = id });
+      return await _mediator.Send(new GetUsuarioByIdQuery.GetUsuarioByIdQueryRequest{ UsuarioId = id });
     }
 
     [HttpPost]
-    public async Task<ActionResult<Unit>> PostUsuario([FromBody] CreateUsuarioCommand.CreateUsuarioCommandDto data)
+    public async Task<ActionResult<Unit>> PostUsuario([FromBody] CreateUsuarioCommand.CreateUsuarioCommandRequest data)
     {
       return await _mediator.Send(data);
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult<ResponseCredentials>> Login([FromBody] LogInUsuarioCommand.LogInUsuarioCommandDto data)
+    public async Task<ActionResult<ResponseCredentials>> Login([FromBody] LogInUsuarioCommand.LogInUsuarioCommandRequest data)
     {
       return await _mediator.Send(data);
     }

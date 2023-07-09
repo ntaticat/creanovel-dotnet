@@ -10,12 +10,12 @@ namespace Application.Commands.Personaje
 {
     public class CreatePersonajeCommand
     {
-        public class CreatePersonajeCommandDto : IRequest 
+        public class CreatePersonajeCommandRequest : IRequest 
         {
             public string Nombre { get; set; }
         }
 
-        public class Handler : IRequestHandler<CreatePersonajeCommandDto>
+        public class Handler : IRequestHandler<CreatePersonajeCommandRequest>
         {
             private readonly CreanovelDbContext _context;
 
@@ -24,7 +24,7 @@ namespace Application.Commands.Personaje
                 _context = context;
             }
 
-            public async Task<Unit> Handle(CreatePersonajeCommandDto request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(CreatePersonajeCommandRequest request, CancellationToken cancellationToken)
             {
                 var personaje = new Domain.Models.Personaje {
                     Nombre = request.Nombre

@@ -14,11 +14,11 @@ namespace Application.Queries.Recurso
 {
     public class GetRecursoByIdQuery
     {
-        public class GetRecursoByIdQueryDto : IRequest<RecursoDto> {
+        public class GetRecursoByIdQueryRequest : IRequest<RecursoDto> {
             public Guid RecursoId { get; set; }
         }
 
-        public class Handler : IRequestHandler<GetRecursoByIdQueryDto, RecursoDto>
+        public class Handler : IRequestHandler<GetRecursoByIdQueryRequest, RecursoDto>
         {
             private readonly CreanovelDbContext _context;
             private readonly IMapper _mapper;
@@ -29,7 +29,7 @@ namespace Application.Queries.Recurso
                 _mapper = mapper;
             }
 
-            public async Task<RecursoDto> Handle(GetRecursoByIdQueryDto request, CancellationToken cancellationToken)
+            public async Task<RecursoDto> Handle(GetRecursoByIdQueryRequest request, CancellationToken cancellationToken)
             {
                 
                 var recurso = await _context.Recursos.FindAsync(request.RecursoId);

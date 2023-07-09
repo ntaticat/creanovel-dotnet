@@ -25,17 +25,17 @@ namespace WebAPI.Controllers
     [HttpGet("{id}")]
     public async Task<ActionResult<EscenaRecursosDto>> GetEscenaRecursos(Guid id)
     {
-      return await _mediator.Send(new GetEscenaByIdQuery.GetEscenaByIdQueryDto{ EscenaId = id });
+      return await _mediator.Send(new GetEscenaByIdQuery.GetEscenaByIdQueryRequest{ EscenaId = id });
     }
 
     [HttpPost]
-    public async Task<ActionResult<Unit>> PostEscena([FromBody] CreateEscenaCommand.CreateEscenaCommandDto data)
+    public async Task<ActionResult<Unit>> PostEscena([FromBody] CreateEscenaCommand.CreateEscenaCommandRequest data)
     {
       return await _mediator.Send(data);
     }
 
     [HttpPatch("{id}")]
-    public async Task<ActionResult<Unit>> PatchEscena(Guid id, [FromBody] UpdateEscenaCommand.UpdateEscenaCommandDto data)
+    public async Task<ActionResult<Unit>> PatchEscena(Guid id, [FromBody] UpdateEscenaCommand.UpdateEscenaCommandRequest data)
     {
       data.EscenaId = id;
       return await _mediator.Send(data);
@@ -44,7 +44,7 @@ namespace WebAPI.Controllers
     [HttpDelete("{id}")]
     public async Task<ActionResult<Unit>> DeleteEscena(Guid id)
     {
-      return await _mediator.Send(new DeleteEscenaCommand.DeleteEscenaCommandDto{ EscenaId = id });
+      return await _mediator.Send(new DeleteEscenaCommand.DeleteEscenaCommandRequest{ EscenaId = id });
     }
   }
 }

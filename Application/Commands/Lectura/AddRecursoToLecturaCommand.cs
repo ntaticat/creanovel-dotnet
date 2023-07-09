@@ -10,14 +10,14 @@ namespace Application.Commands.Lectura
 {
     public class AddRecursoToLecturaCommand
     {
-        public class AddRecursoToLecturaCommandDto : IRequest
+        public class AddRecursoToLecturaCommandRequest : IRequest
         {
             public Guid LecturaId { get; set; }
             public Guid RecursoId { get; set; }
             public int RecursoOrder { get; set; }
         }
 
-        public class Handler : IRequestHandler<AddRecursoToLecturaCommandDto>
+        public class Handler : IRequestHandler<AddRecursoToLecturaCommandRequest>
         {
             private readonly CreanovelDbContext _context;
 
@@ -26,7 +26,7 @@ namespace Application.Commands.Lectura
                 _context = context;
             }
 
-            public async Task<Unit> Handle(AddRecursoToLecturaCommandDto request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(AddRecursoToLecturaCommandRequest request, CancellationToken cancellationToken)
             {
                 var lecturaRecurso = new Domain.Models.LecturaRecursos {
                     LecturaId = request.LecturaId,

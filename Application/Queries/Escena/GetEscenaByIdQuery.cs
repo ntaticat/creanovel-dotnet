@@ -13,11 +13,11 @@ namespace Application.Queries.Escena
 {
     public class GetEscenaByIdQuery
     {
-        public class GetEscenaByIdQueryDto : IRequest<EscenaRecursosDto> {
+        public class GetEscenaByIdQueryRequest : IRequest<EscenaRecursosDto> {
             public Guid EscenaId { get; set; }
         }
 
-        public class Handler : IRequestHandler<GetEscenaByIdQueryDto, EscenaRecursosDto>
+        public class Handler : IRequestHandler<GetEscenaByIdQueryRequest, EscenaRecursosDto>
         {
             private readonly CreanovelDbContext _context;
             private readonly IMapper _mapper;
@@ -28,7 +28,7 @@ namespace Application.Queries.Escena
                 _mapper = mapper;
             }
 
-            public async Task<EscenaRecursosDto> Handle(GetEscenaByIdQueryDto request, CancellationToken cancellationToken)
+            public async Task<EscenaRecursosDto> Handle(GetEscenaByIdQueryRequest request, CancellationToken cancellationToken)
             {
                 var escena = await _context.Escenas.Include(escena => escena.Recursos).FirstOrDefaultAsync(escena => escena.EscenaId == request.EscenaId);
                 

@@ -10,12 +10,12 @@ namespace Application.Commands.Escena
 {
     public class DeleteEscenaCommand
     {
-        public class DeleteEscenaCommandDto : IRequest
+        public class DeleteEscenaCommandRequest : IRequest
         {
             public Guid EscenaId { get; set; }
         }
 
-        public class Handler : IRequestHandler<DeleteEscenaCommandDto>
+        public class Handler : IRequestHandler<DeleteEscenaCommandRequest>
         {
             private readonly CreanovelDbContext _context;
 
@@ -24,7 +24,7 @@ namespace Application.Commands.Escena
                 _context = context;
             }
 
-            public async Task<Unit> Handle(DeleteEscenaCommandDto request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(DeleteEscenaCommandRequest request, CancellationToken cancellationToken)
             {
                 var escena = await _context.Escenas.FindAsync(request.EscenaId);
 

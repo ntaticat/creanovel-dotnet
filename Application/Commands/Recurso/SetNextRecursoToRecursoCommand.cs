@@ -13,13 +13,13 @@ namespace Application.Commands.Recurso
 {
     public class SetNextRecursoToRecursoCommand
     {
-        public class SetNextRecursoToRecursoCommandDto : IRequest 
+        public class SetNextRecursoToRecursoCommandRequest : IRequest 
         {
             public Guid RecursoId { get; set; }
             public Guid RecursoSiguienteId { get; set; }
         }
 
-        public class Handler : IRequestHandler<SetNextRecursoToRecursoCommandDto>
+        public class Handler : IRequestHandler<SetNextRecursoToRecursoCommandRequest>
         {
             private readonly CreanovelDbContext _context;
 
@@ -28,7 +28,7 @@ namespace Application.Commands.Recurso
                 _context = context;
             }
 
-            public async Task<Unit> Handle(SetNextRecursoToRecursoCommandDto request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(SetNextRecursoToRecursoCommandRequest request, CancellationToken cancellationToken)
             {
                 var recurso = await _context.Recursos.OfType<RecursoConversacion>().FirstOrDefaultAsync(r => r.RecursoId == request.RecursoId);
                 
