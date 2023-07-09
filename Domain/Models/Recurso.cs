@@ -3,12 +3,6 @@ using System.Collections.Generic;
 
 namespace Domain.Models
 {
-    public enum RecursosType
-    {
-        Conversacion,
-        Decision
-    }
-
     public abstract class Recurso
     {
         public Guid RecursoId { get; set; }

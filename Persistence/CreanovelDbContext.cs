@@ -18,6 +18,7 @@ namespace Persistence
         public DbSet<RecursoConversacion> RecursosConversacion { get; set; }
         public DbSet<RecursoDecision> RecursosDecision { get; set; }
         public DbSet<RecursoDecisionOpcion> RecursoDecisionOpciones { get; set; }
+        public DbSet<RecursoEntrada> RecursosEntrada { get; set; }
         public DbSet<Personaje> Personajes { get; set; }
         public DbSet<Background> Backgrounds { get; set; }
         public DbSet<PersonajeSprite> PersonajeSprites { get; set; }
@@ -37,6 +38,7 @@ namespace Persistence
             modelBuilder.Entity<Recurso>().ToTable("Recursos");
             modelBuilder.Entity<RecursoConversacion>().ToTable("RecursosConversacion");
             modelBuilder.Entity<RecursoDecision>().ToTable("RecursosDecision");
+            modelBuilder.Entity<RecursoEntrada>().ToTable("RecursosEntrada");
 
             modelBuilder.Entity<Usuario>()
                 .HasMany(e => e.NovelasCreadas)

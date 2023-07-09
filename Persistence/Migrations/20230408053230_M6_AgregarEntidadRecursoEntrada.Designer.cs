@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -11,9 +12,10 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(CreanovelDbContext))]
-    partial class CreanovelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230408053230_M6_AgregarEntidadRecursoEntrada")]
+    partial class M6_AgregarEntidadRecursoEntrada
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -469,11 +471,21 @@ namespace Persistence.Migrations
                     b.Property<string>("AutorMensaje")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("BackgroundSpriteId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Mensaje")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("PersonajeSpriteId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("SiguienteRecursoId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.HasIndex("BackgroundSpriteId");
+
+                    b.HasIndex("PersonajeSpriteId");
 
                     b.HasIndex("SiguienteRecursoId");
 
@@ -484,11 +496,18 @@ namespace Persistence.Migrations
                 {
                     b.HasBaseType("Domain.Models.Recurso");
 
-                    b.Property<string>("AutorDecisionMensaje")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid?>("BackgroundSpriteId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("DecisionMensaje")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("PersonajeSpriteId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasIndex("BackgroundSpriteId");
+
+                    b.HasIndex("PersonajeSpriteId");
 
                     b.ToTable("RecursosDecision", (string)null);
                 });
@@ -708,6 +727,14 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Models.RecursoConversacion", b =>
                 {
+                    b.HasOne("Domain.Models.BackgroundSprite", "BackgroundSprite")
+                        .WithMany()
+                        .HasForeignKey("BackgroundSpriteId");
+
+                    b.HasOne("Domain.Models.PersonajeSprite", "PersonajeSprite")
+                        .WithMany()
+                        .HasForeignKey("PersonajeSpriteId");
+
                     b.HasOne("Domain.Models.Recurso", null)
                         .WithOne()
                         .HasForeignKey("Domain.Models.RecursoConversacion", "RecursoId")
@@ -718,16 +745,32 @@ namespace Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("SiguienteRecursoId");
 
+                    b.Navigation("BackgroundSprite");
+
+                    b.Navigation("PersonajeSprite");
+
                     b.Navigation("SiguienteRecurso");
                 });
 
             modelBuilder.Entity("Domain.Models.RecursoDecision", b =>
                 {
+                    b.HasOne("Domain.Models.BackgroundSprite", "BackgroundSprite")
+                        .WithMany()
+                        .HasForeignKey("BackgroundSpriteId");
+
+                    b.HasOne("Domain.Models.PersonajeSprite", "PersonajeSprite")
+                        .WithMany()
+                        .HasForeignKey("PersonajeSpriteId");
+
                     b.HasOne("Domain.Models.Recurso", null)
                         .WithOne()
                         .HasForeignKey("Domain.Models.RecursoDecision", "RecursoId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
+
+                    b.Navigation("BackgroundSprite");
+
+                    b.Navigation("PersonajeSprite");
                 });
 
             modelBuilder.Entity("Domain.Models.RecursoEntrada", b =>
