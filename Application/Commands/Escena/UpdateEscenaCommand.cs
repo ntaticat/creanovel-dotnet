@@ -14,7 +14,7 @@ namespace Application.Commands.Escena
         {
             public Guid EscenaId { get; set; }
             public string Identificador { get; set; }
-            public Guid? NovelaId { get; set; }
+            public Guid? NovelaVersionId { get; set; }
             public bool? PrimerEscena { get; set; }
             public bool? UltimaEscena { get; set; }
         }
@@ -38,7 +38,7 @@ namespace Application.Commands.Escena
                 }
 
                 escena.Identificador = request.Identificador ?? escena.Identificador;
-                escena.NovelaId = request.NovelaId ?? escena.NovelaId;
+                escena.NovelaVersionId = request.NovelaVersionId ?? escena.NovelaVersionId;
                 escena.PrimerEscena = request.PrimerEscena ?? escena.PrimerEscena;
                 escena.UltimaEscena = request.UltimaEscena ?? escena.UltimaEscena;
 

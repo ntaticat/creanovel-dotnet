@@ -9,8 +9,8 @@ namespace Domain.Models
         public Guid EscenaId { get; set; }
         public string Identificador { get; set; }
 
-        public Guid NovelaId { get; set; }
-        public Novela Novela { get; set; }
+        public Guid NovelaVersionId { get; set; }
+        public NovelaVersion NovelaVersion { get; set; }
 
         public ICollection<Recurso> Recursos { get; set; }
 

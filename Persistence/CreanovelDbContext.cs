@@ -13,6 +13,7 @@ namespace Persistence
         public DbSet<Lectura> Lecturas { get; set; }
         public DbSet<LecturaRecursos> LecturaRecurso { get; set; }
         public DbSet<Novela> Novelas { get; set; }
+        public DbSet<NovelaVersion> NovelaVersiones { get; set; }
         public DbSet<Escena> Escenas { get; set; }
         public DbSet<Recurso> Recursos { get; set; }
         public DbSet<RecursoConversacion> RecursosConversacion { get; set; }

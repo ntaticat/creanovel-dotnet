@@ -13,7 +13,7 @@ namespace Application.Commands.Escena
         public class CreateEscenaCommandRequest : IRequest
         {
             public string Identificador { get; set; }
-            public Guid NovelaId { get; set; }
+            public Guid NovelaVersionId { get; set; }
             public bool PrimerEscena { get; set; }
             public bool UltimaEscena { get; set; }
         }
@@ -31,7 +31,7 @@ namespace Application.Commands.Escena
             {
                 var escena = new Domain.Models.Escena {
                     Identificador = request.Identificador,
-                    NovelaId = request.NovelaId,
+                    NovelaVersionId = request.NovelaVersionId,
                     PrimerEscena = request.PrimerEscena,
                     UltimaEscena = request.UltimaEscena
                 };

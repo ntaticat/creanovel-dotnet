@@ -34,12 +34,6 @@ namespace WebAPI.Controllers
       return await _mediator.Send(new GetNovelaByIdQuery.GetNovelaByIdQueryRequest{ NovelaId = id });
     }
 
-    [HttpGet("{id}/escenas")]
-    public async Task<ActionResult<NovelaWithEscenasDto>> GetNovelaWithEscenas(Guid id)
-    {
-      return await _mediator.Send(new GetNovelaByIdWithEscenasQuery.GetNovelaByIdWithEscenasQueryRequest{ NovelaId =  id });
-    }
-
     [HttpPost]
     public async Task<ActionResult<Unit>> PostNovela([FromBody] CreateNovelaCommand.CreateNovelaCommandRequest data)
     {
