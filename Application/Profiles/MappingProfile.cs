@@ -10,6 +10,7 @@ using Application.Dtos.LecturaRecurso;
 using Application.Dtos.Novela;
 using Application.Dtos.NovelaBackground;
 using Application.Dtos.NovelaPersonaje;
+using Application.Dtos.NovelaVersion;
 using Application.Dtos.Personaje;
 using Application.Dtos.PersonajeSprite;
 using Application.Dtos.Recurso;
@@ -29,7 +30,8 @@ namespace Application.Profiles
             .ForMember(x => x.Personajes, y => y.MapFrom(z => z.Personajes.Select(p => p.Personaje).ToList()))
             .ForMember(x => x.Backgrounds, y => y.MapFrom(z => z.Backgrounds.Select(p => p.Background).ToList()));
 
-            
+            // NovelaVersion
+            CreateMap<NovelaVersion, NovelaVersionDto>();
 
             // Personaje
             CreateMap<Personaje, PersonajeDto>();
