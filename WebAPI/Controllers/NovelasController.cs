@@ -29,9 +29,13 @@ namespace WebAPI.Controllers
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<NovelaNoEscenasDto>> GetNovela(Guid id)
+    public async Task<ActionResult<NovelaPopulatedDto>> GetNovela(Guid id, [FromQuery(Name = "versiones")] string hasVersiones, [FromQuery(Name = "personajes")] string hasPersonajes, [FromQuery(Name = "backgrounds")] string hasBackgrounds)
     {
-      return await _mediator.Send(new GetNovelaByIdQuery.GetNovelaByIdQueryRequest{ NovelaId = id });
+      bool includeVersiones =  !String.IsNullOrEmpty(hasVersiones) && hasVersiones == "True";
+      bool includePersonajes =  !String.IsNullOrEmpty(hasPersonajes) && hasPersonajes == "True";
+      bool includeBackgrounds =  !String.IsNullOrEmpty(hasBackgrounds) && hasBackgrounds == "True";
+
+      return await _mediator.Send(new GetNovelaByIdQuery.GetNovelaByIdQueryRequest{ NovelaId = id, HasVersiones = includeVersiones, HasBackgrounds = includeBackgrounds, HasPersonajes = includePersonajes });
     }
 
     [HttpPost]

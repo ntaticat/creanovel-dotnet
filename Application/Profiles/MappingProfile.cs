@@ -24,14 +24,19 @@ namespace Application.Profiles
     {
         public MappingProfile()
         {
+            // NovelaVersion
+            CreateMap<NovelaVersion, NovelaVersionDto>();
+            
             // Novela
             CreateMap<Novela, NovelaNoEscenasDto>();
             CreateMap<Novela, NovelaWithEscenasDto>()
             .ForMember(x => x.Personajes, y => y.MapFrom(z => z.Personajes.Select(p => p.Personaje).ToList()))
             .ForMember(x => x.Backgrounds, y => y.MapFrom(z => z.Backgrounds.Select(p => p.Background).ToList()));
-
-            // NovelaVersion
-            CreateMap<NovelaVersion, NovelaVersionDto>();
+            
+            CreateMap<Novela, NovelaPopulatedDto>()
+            .ForMember(x => x.Versiones, y => y.MapFrom(z => z.NovelaVersiones))
+            .ForMember(x => x.Personajes, y => y.MapFrom(z => z.Personajes.Select(p => p.Personaje).ToList()))
+            .ForMember(x => x.Backgrounds, y => y.MapFrom(z => z.Backgrounds.Select(p => p.Background).ToList()));
 
             // Personaje
             CreateMap<Personaje, PersonajeDto>();
