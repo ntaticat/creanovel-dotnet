@@ -16,6 +16,7 @@ namespace Application.Commands.NovelaVersion
         {
             public string NumeroVersion { get; set; }
             public Guid NovelaId { get; set; }
+            public bool? Disponible { get; set; }
         }
 
         public class Handler : IRequestHandler<CreateNovelaVersionCommandRequest>
@@ -31,7 +32,8 @@ namespace Application.Commands.NovelaVersion
             {
                 var novelaVersion = new Domain.Models.NovelaVersion {
                     NovelaId = request.NovelaId,
-                    NumeroVersion = request.NumeroVersion
+                    NumeroVersion = request.NumeroVersion,
+                    Disponible = request.Disponible ?? false
                 };
 
                 await _context.NovelaVersiones.AddAsync(novelaVersion);
