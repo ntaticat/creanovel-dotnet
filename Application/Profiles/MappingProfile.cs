@@ -26,6 +26,7 @@ namespace Application.Profiles
         {
             // NovelaVersion
             CreateMap<NovelaVersion, NovelaVersionDto>();
+            CreateMap<NovelaVersion, NovelaVersionPopulatedDto>();
             
             // Novela
             CreateMap<Novela, NovelaNoEscenasDto>();

@@ -24,13 +24,19 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<List<NovelaVersionDto>>> GetNovelas()
         {
-        return await _mediator.Send(new GetNovelaVersionesQuery.GetNovelaVersionesQueryRequest());
+            return await _mediator.Send(new GetNovelaVersionesQuery.GetNovelaVersionesQueryRequest());
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<NovelaVersionPopulatedDto>> GetNovela(Guid id)
+        {
+            return await _mediator.Send(new GetNovelaVersionByIdQuery.GetNovelaVersionByIdQueryRequest{ NovelaVersionId = id});
         }
 
         [HttpPost]
         public async Task<ActionResult<Unit>> PostNovelaVersion([FromBody] CreateNovelaVersionCommand.CreateNovelaVersionCommandRequest data)
         {
-        return await _mediator.Send(data);
+            return await _mediator.Send(data);
         }
     }
 }
