@@ -10,7 +10,7 @@ namespace Application.Commands.Personaje
 {
     public class CreatePersonajeCommand
     {
-        public class CreatePersonajeCommandRequest : IRequest 
+        public record CreatePersonajeCommandRequest : IRequest 
         {
             public string Nombre { get; set; }
         }

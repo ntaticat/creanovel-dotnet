@@ -58,6 +58,7 @@ namespace WebAPI
           corsPolicyBuilder =>
           {
             corsPolicyBuilder.WithOrigins("http://localhost:4200").AllowAnyHeader();
+            corsPolicyBuilder.WithOrigins("https://creanovel.netlify.app").AllowAnyHeader();
           }
       ));
 
@@ -66,6 +67,7 @@ namespace WebAPI
               Configuration.GetConnectionString("DefaultConnection")
           )
       );
+      
       services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
       services.AddControllers()
@@ -85,14 +87,14 @@ namespace WebAPI
           var groupName = "v1";
           options.SwaggerDoc(groupName, new OpenApiInfo
           {
-            Title = $"CreaNovel Web API {groupName}",
+            Title = $"Creanovel Web API {groupName}",
             Version = groupName,
             Description = "RESTful API for create, manage and read visual novels",
             Contact = new OpenApiContact
             {
               Name = "Rafael Estrada",
               Email = "ntaticat@gmail.com",
-              Url = new Uri("http://github.com/ntaticat")
+              Url = new Uri("https://github.com/ntaticat")
             }
           });
           
@@ -117,7 +119,7 @@ namespace WebAPI
                   Id = "Bearer"
                 }
               },
-              new string[] {}
+              Array.Empty<string>()
             }
           });
         }
