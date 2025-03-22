@@ -59,6 +59,18 @@ namespace Persistence
                 .WithOne(e => e.Recurso)
                 .OnDelete(DeleteBehavior.ClientCascade);
 
+            modelBuilder.Entity<RecursoConversacion>()
+                .HasOne(r => r.SiguienteRecurso)
+                .WithMany()
+                .HasForeignKey(rc => rc.SiguienteRecursoId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<RecursoDecision>()
+                .HasMany(rd => rd.Opciones)
+                .WithOne(o => o.RecursoDecision)
+                .HasForeignKey(o => o.RecursoDecisionId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<NovelaPersonaje>()
                 .HasKey(np => new { np.NovelaId, np.PersonajeId });
             modelBuilder.Entity<NovelaBackground>()
