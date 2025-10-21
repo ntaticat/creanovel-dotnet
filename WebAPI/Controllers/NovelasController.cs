@@ -8,6 +8,8 @@ using AutoMapper;
 using Persistence;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using WebAPI.Middlewares;
+using System.Net;
 
 namespace WebAPI.Controllers
 {
@@ -25,7 +27,8 @@ namespace WebAPI.Controllers
     [HttpGet]
     public async Task<ActionResult<List<NovelaNoEscenasDto>>> GetNovelas()
     {
-      return await _mediator.Send(new GetNovelasQuery.GetNovelasQueryRequest());
+      var novelas = await _mediator.Send(new GetNovelasQuery.GetNovelasQueryRequest());
+      return Ok(novelas);
     }
 
     [HttpGet("{id}")]
@@ -33,15 +36,21 @@ namespace WebAPI.Controllers
     {
       bool includeVersiones =  !String.IsNullOrEmpty(hasVersiones) && hasVersiones == "True";
       bool includePersonajes =  !String.IsNullOrEmpty(hasPersonajes) && hasPersonajes == "True";
-      bool includeBackgrounds =  !String.IsNullOrEmpty(hasBackgrounds) && hasBackgrounds == "True";
+      bool includeBackgrounds = !String.IsNullOrEmpty(hasBackgrounds) && hasBackgrounds == "True";
 
-      return await _mediator.Send(new GetNovelaByIdQuery.GetNovelaByIdQueryRequest{ NovelaId = id, HasVersiones = includeVersiones, HasBackgrounds = includeBackgrounds, HasPersonajes = includePersonajes });
+      var novela = await _mediator.Send(new GetNovelaByIdQuery.GetNovelaByIdQueryRequest { NovelaId = id, HasVersiones = includeVersiones, HasBackgrounds = includeBackgrounds, HasPersonajes = includePersonajes });
+
+      if (novela == null)
+        return NotFound();
+    
+      return novela;
     }
 
     [HttpPost]
-    public async Task<ActionResult<Unit>> PostNovela([FromBody] CreateNovelaCommand.CreateNovelaCommandRequest data)
+    public async Task<ActionResult> PostNovela([FromBody] CreateNovelaCommand.CreateNovelaCommandRequest data)
     {
-      return await _mediator.Send(data);
+      var id = await _mediator.Send(data);
+      return CreatedAtAction(nameof(GetNovela), new { id }, null);
     }
 
     [HttpPost("personajes")]
