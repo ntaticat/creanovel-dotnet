@@ -57,8 +57,10 @@ namespace WebAPI
       services.AddCors(options => options.AddDefaultPolicy(
           corsPolicyBuilder =>
           {
-            corsPolicyBuilder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
-            corsPolicyBuilder.WithOrigins("https://creanovel.netlify.app").AllowAnyHeader().AllowAnyMethod();
+            corsPolicyBuilder.WithOrigins("http://localhost:4200", "https://creanovel.netlify.app")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithExposedHeaders("Location");
           }
       ));
 
