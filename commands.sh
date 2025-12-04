@@ -1,9 +1,19 @@
-# Crear migracion para actualizar cambios en Dominio
+# Crear migracion para actualizar base de datos
 dotnet ef migrations add NOMBRE_MIGRACION -p Persistence/ -s WebAPI/
 
-# Actualizar la base de datos
+# Actualizar la base de datos después de migración
+# !!! En desarrollo no necesitas ejecutar manualmente
+# !!! este comando, Program.cs ya lo hace por ti.
 dotnet ef database update --project WebAPI/
 
-# Crear imagen y ejecutar contenedor
-docker build -f WebAPI/Dockerfile -t creanovel-api .   
-docker run -d -p 5000:80 --name creanovel-api creanovel-api
+# Usar Docker compose para desarrollo
+docker compose up -d
+
+# User-Secrets solo para Development !
+dotnet user-secrets init --project WebAPI
+# Usar secrets para cadena de conexión a la db
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=localhost;Database=dbName;User Id=sa;Password=YourSecureSecret" --project WebAPI
+# Usar secrets para cadena de conexión a la db
+dotnet user-secrets set "JWTKey" "YourSecureSecret" --project WebAPI
+# ver user secrets
+dotnet user-secrets list --project WebAPI
