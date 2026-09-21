@@ -1,10 +1,12 @@
 using System;
+using System.Linq;
 using System.Net;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Application.Handlers;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace WebAPI.Middlewares
 {
@@ -42,6 +44,12 @@ namespace WebAPI.Middlewares
                     context.Response.StatusCode = (int)exceptionHandler.Code;
                     break;
 
+                case ValidationException validationException:
+                    logger.LogError(ex, "<-- Validation Error -->");
+                    errors = validationException.Errors.Select(e => e.ErrorMessage).ToList();
+                    context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    break;
+
                 case Exception e:
                     logger.LogError(ex, "<-- Server Error -->");
                     errors = string.IsNullOrWhiteSpace(e.Message)? "Error" : e.Message;
@@ -52,7 +60,7 @@ namespace WebAPI.Middlewares
             context.Response.ContentType = "application/json";
 
             if(errors != null) {
-                var results = JsonConvert.SerializeObject(new { errors });
+                var results = JsonSerializer.Serialize(new { errors });
                 await context.Response.WriteAsync(results);
             }
         }
